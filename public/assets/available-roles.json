@@ -1,0 +1,9 @@
+{
+	"results": [{
+		"roleId": "TCT_STW_User",
+		"roleName": "TCT_STW_User"
+	}, {
+		"roleId": "TCT_TAGADMIN",
+		"roleName": "TCT_TAGADMIN"
+	}]
+}

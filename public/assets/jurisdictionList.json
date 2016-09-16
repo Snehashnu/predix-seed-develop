@@ -1,0 +1,16 @@
+[
+	{
+		"name": "Commercial",
+		"class": "Commerce Or Dual"
+	},
+
+	{
+		"name": "Energy",
+		"class": "DoE/NRC"
+	},
+
+	{
+		"name": "State",
+		"class": "State"
+	}
+]

@@ -1,0 +1,55 @@
+{
+"lstLookupData":
+  [
+  {
+  "Rational":"Legacy PLM - no rationale recorded",
+  "ObjectId":"102L3279Q002~099test3302",
+  "CountryName":"United States",
+  "ExportStatus":"NLR",
+  "EccnReviewd":null,
+  "TaggerInvolved":null,
+  "AppSite":"Power & Water",
+  "ObjectDesc":"INLET -1 BRG ARRANGEMENT",
+  "UpdatedBy":"307005467",
+  "appType":"PGPLM_Part",
+  "ClassificationCode":"EAR99",
+  "appId":"PGPLM",
+  "LastUpdated":"2016-05-05 00:00:00.0",
+  "RecordId":"927366",
+  "GeqmsFormat":"US EAR:EAR99 ,NLR"
+  },
+    {
+  "Rational":"Legacy PLM - no rationale recorded",
+  "ObjectId":"102L3279Q002~099test3302",
+  "CountryName":"United States",
+  "ExportStatus":"NLR",
+  "EccnReviewd":null,
+  "TaggerInvolved":null,
+  "AppSite":"Power & Water",
+  "ObjectDesc":"INLET -1 BRG ARRANGEMENT",
+  "UpdatedBy":"307005467",
+  "appType":"PGPLM_Part",
+  "ClassificationCode":"EAR99",
+  "appId":"PGPLM",
+  "LastUpdated":"2016-05-05 00:00:00.0",
+  "RecordId":"927366",
+  "GeqmsFormat":"US EAR:EAR99 ,NLR"
+  },
+    {
+  "Rational":"Legacy PLM - no rationale recorded",
+  "ObjectId":"102L3279Q002~099test3302",
+  "CountryName":"United States",
+  "ExportStatus":"NLR",
+  "EccnReviewd":null,
+  "TaggerInvolved":null,
+  "AppSite":"Power & Water",
+  "ObjectDesc":"INLET -1 BRG ARRANGEMENT",
+  "UpdatedBy":"307005467",
+  "appType":"PGPLM_Part",
+  "ClassificationCode":"EAR99",
+  "appId":"PGPLM",
+  "LastUpdated":"2016-05-05 00:00:00.0",
+  "RecordId":"927366",
+  "GeqmsFormat":"US EAR:EAR99 ,NLR"
+  }
+  ]}

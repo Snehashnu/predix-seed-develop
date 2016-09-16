@@ -1,0 +1,33 @@
+[
+
+  
+    {
+        "name":"5.2.2Site","value":"5.2.2Site"
+		
+    },
+  
+    {
+        "name":"EnergyManagement","value":"Energy Management"
+    },
+  
+    {
+      "name":"Power & Water","value":"Power & Water"
+    },
+	
+    {     
+     "name":"test4Mar2015","value":"test4Mar2015" 
+	},
+	
+    {
+    "name":"testApplicationSite","value":"testApplicationSite"
+    },
+	
+    { 
+
+    "name":"testApplicationSite-5Aug2015","value":"testApplicationSite-5Aug2015"
+    },
+	
+    {
+      "name":"TestSite1","value":"TestSite1"
+    }
+]

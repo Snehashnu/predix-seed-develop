@@ -1,0 +1,592 @@
+<px-card header-text="GENERAL -> CREATE OBJECT">
+	<ul class="nav nav-tabs" style="margin-bottom: 0rem;">
+		<li class="active" style="max-width: 40%"><a data-toggle="tab" style="color: #797a7a !important;"
+			href="#home1">Review Your Objects</a></li>
+		<li style="max-width: 30%"><a id="tagObjPageId" style="color: #797a7a !important;" data-toggle="tab" ng-click="tagObjLoad(0);" href="#stwDiv">Tag Object</a></li>
+		<li style="max-width: 30%"><a id="confirmTagId" style="color: #797a7a !important;" data-toggle="tab" href="#confirmDiv">Confirm &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+	</ul>
+	
+	<div class="tab-content">
+		<div id="home1" class="tab-pane fade in active">
+			<form class="form-inline" role="form">
+			<div id="appSiteDiv" class="form-group" >
+      			<div class="dropdown" style="max-width: 500px;min-width: 240px;">
+      			<label class="headerLabel" for="appSiteDropdown">Application Site</label>
+      				<a class="{{appSiteClass}}" style="width:100%;" ng-model="displayAppSite" id="appSiteDropdown"
+							data-toggle="dropdown" href="#">{{ displayAppSite }} <b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu"	aria-labelledby="dropdownAppSite" style="width:100%;">
+						<li ng-repeat="appSite in appSiteList">
+							<span ng-click="appSiteChange(appSite)">{{appSite.value}}</span>
+						</li>
+					</ul>
+					<px-tooltip for=appSiteDropdown	 smartOrientation	tooltip-message="Select Application Site"></px-tooltip>
+      			</div>
+    		</div>
+    		
+    		<div class="form-group" id="appIdDiv">
+   				 <div class="dropdown" style="max-width: 500px;min-width: 340px;">
+   				 <label class="headerLabel" for="appIdDropdown">Application ID</label>
+     				<a class="{{appIdClass}}" style="width:100%;" ng-model="displayAppId" id="appIdDropdown"
+							data-toggle="dropdown" href="#">{{ displayAppId }} <b class="caret"></b></a>
+					<ul class="dropdown-menu"  role="menu"	aria-labelledby="dropdownAppId" style="width:100%;">
+						<li ng-repeat="appId in appIdList">
+							<span ng-click="appIdChange(appId)">{{appId.value}}</span>
+						</li>
+					</ul>
+					<px-tooltip for=appIdDropdown	 smartOrientation	tooltip-message="Select Application Id"></px-tooltip>
+     			</div>
+   			</div>
+
+   			<div class="form-group" id="appTypeDiv" >
+      			<div class="dropdown" style="max-width: 420px;min-width: 400px;">
+      			<label class="headerLabel" for="appTypeDropdown">Application Type</label>
+      				<a class="{{appTypeClass}}" style="width:100%;" ng-model="displayAppType" id="appTypeDropdown"
+						    data-toggle="dropdown" href="#">{{ displayAppType }} <b	class="caret"></b></a>
+					<ul class="dropdown-menu"   role="menu"	aria-labelledby="dropdownAppType" style="width:100%;">
+						<li ng-repeat="appType in appTypeList">
+							<span ng-click="appTypeChange(appType)">{{appType.value}}</span>
+						</li>
+					</ul>
+					<px-tooltip for=appTypeDropdown	 smartOrientation	tooltip-message="Select Application Type"></px-tooltip>
+				</div>
+			</div>
+	</form>	
+	
+	<!-- <div id='objInputDiv' icon='fa-list-ul' header-text='Object Input'>	 -->
+			<div id='objInputDiv' class="panel panel-primary">
+				<div class="panel-heading">Object Input</div>
+				<div class="panel-body">
+					<form id="objForm">
+						<div id="messageId" class={{messageClass}}>
+							{{message}}<br />
+						</div>
+						<div id="objDataTable">
+							<table id="objDataTable" style="width: 100%;">
+								<thead>
+									<tr>
+										<th style="font-size: 1.25em">Select</th>
+										<th style="font-size: 1.25em">Object Id<b
+											style="color: red">*</b></th>
+										<th style="font-size: 1.25em">Object Description<b
+											style="color: red">*</b></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="form-field" ng-repeat="obj in objDataList">
+										<td style="padding-bottom: 0.5em; padding-top: 0.5em;"><input
+											id="objCheck" type=checkbox ng-model="obj.checked"
+											onclick="changeColor(this);"></td>
+										<td style="padding-bottom: 0.5em; padding-top: 0.5em;"><input
+											type=search class="text-input input--regular"
+											required="required" maxlength=50 id="objIdField"
+											ng-model="obj.key" placeholder="Enter Object Id"></td>
+										<td style="padding-bottom: 0.5em; padding-top: 0.5em;"><input
+											type=search class="text-input input--regular"
+											required="required" maxlength=4000 id="objDescField"
+											ng-model="obj.value" placeholder="Enter Object Description"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+
+						<label class="form-field__help validation-warning"
+							style="font-weight: normal;"><i> Please note that
+								tagging multiple items at once will result in same tag,
+								classification/rationale being applied to all items. </i></label> <br />
+						<br /> 
+							<input class="btn1 btn--default" id="objAddBtn"
+								type="button" value="Add another object ID"	ng-click="addObject();">
+							<input class="btn1 btn--default" id="objDeleteBtn" 
+								type="button" value="Delete Selected Rows"	ng-click="deleteObject();"> 
+								<br/>
+							<input	class="btn1 btn--primary btn--large" style="float: right;" 
+								type=submit value="Continue" ng-click="saveContinue();">
+					</form>
+				</div>
+			</div>
+
+		</div>
+		<div id="stwDiv" class="tab-pane fade">
+		<div id="selectTagDiv" style="min-height: 3em;">
+		<div class="form-inline" style="float: left;margin-top: 5px;">
+			<label style="display: inline;background-color: #306538;color:#fff;border-radius: 5px;padding: 5px;">How would you like to tag? &nbsp;&nbsp;&nbsp;</label> 
+			<div class="form-inline;" style="display: inline;">
+				<input id="listViewRadio" type=radio ng-model="viewSelected.view" ng-change="changeView();"	value="411" checked>
+			    <label class=label--inline	for="listViewRadio">411</label>
+			    <input id="tableViewRadio" class=u-ml++ type=radio ng-model="viewSelected.view" ng-change="changeView();" value="STW">
+			    <label class=label--inline	for="tableViewRadio">STW</label>
+			</div>
+			
+		</div>
+		</div>
+		 <div class="rcorners">
+			<div class="form-inline" style="box-sizing: border-box;">
+				<div class="form-group" id="objNavBar" style="width:2%;height: 100%;float: left;; vertical-align: middle; color: red;">
+				<img src="../images/navigate_left.jpg" alt="Navigate Left" ng-click="tagObjPrev()" height="30" >
+				</div>
+				<div class="form-group tagInfoD" style="vertical-align: top;padding: 2px;" ng-repeat="obj in tempObjDataList">
+					<a href="#" class="btn btn-primary" style="width: 100%; word-wrap: break-word;vertical-align: bottom; border-radius: .3em; height: 2.5em;"
+						data-toggle="collapse" data-target="#{{obj.key}}"> {{obj.key}}<span
+						style="float: right;top: 10px;" class="glyphicon glyphicon-remove" ng-click="removeCountry(obj.key)"></span>
+					</a>
+
+					<div id="{{obj.key}}" class="collapse well well-sm" style="width: 100%;word-wrap: break-word; padding: 0px; margin-bottom: 0px;background-color:none; font-size: 10px;"> 
+					Object related information will come here <br>
+					<span class="field-tip">
+    <u style="color: red;">More Info</u>
+    <span class="tip-content">Rational Information will come here.</span>
+</span> 
+					</div>
+				</div>
+				<div class="form-group" id="objNavBar1" style="width:2%;height: 100%;float: right; vertical-align: middle; color: red;">
+				<img src="../images/navigate_right.jpg" alt="Navigate Right" ng-click="tagObjNext()"  height="30" >
+				</div>
+			</div>
+				<!-- <div id="objNavBar"  class="form-inline" style="width: 100%; text-align: center;">
+					<div class="form-group" style="float: left;">
+						<button class="btn btn-primary" type="button" ng-click="tagObjPrev()">
+							<span class="glyphicon glyphicon-arrow-left"> </span>Left 
+						</button>
+					</div>
+					<div class="form-group" style="display: inline-block;">
+						<button class="btn btn-primary" type="button" ng-click="tagObjAll()">Show All</button>
+					</div>
+					<div class="form-group" style="float: right;">
+						<button class="btn btn-primary" type="button" ng-click="tagObjNext()">
+							Right <span class="glyphicon glyphicon-arrow-right"></span>
+						</button>
+					</div>
+
+				</div> -->
+			</div>
+
+
+	
+	<div id="411TagDiv" ng-hide="hide411Div">
+		<div id="tagStep1Div" class="tagStepDiv">
+			<label><span class="{{firstIconClass}}" style="vertical-align: middle;"></span>
+				Step 1</label>
+			<br/>
+			<label style="font-weight:normal;">{{firstQuestion.quesText}}</label>
+			<div id="tagStep1Div" class="form-group" style="padding-top: 1em;">
+      			<div class="dropdown" style="max-width: 500px;min-width: 240px;">
+      			
+      				<a class="{{firstAnsClass}}" style="width:100%;" ng-model="displayFirstAns" id="step1Dropdown"
+							data-toggle="dropdown" href="#">{{displayFirstAns}} <b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu"	aria-labelledby="dropdownFirstQues" style="width:100%;">
+						<li ng-repeat="firstAns in firstAnsList">
+							<span ng-click="getChildQues(firstAns,firstQuestion.quesId)">{{firstAns.label}}</span>
+						</li>
+					</ul>
+					<px-tooltip for=appSiteDropdown	 smartOrientation	tooltip-message="Select Answer"></px-tooltip>
+      			</div>
+    		</div>
+		</div>
+		<div id="tagStep2Div" class="tagStepDiv" ng-hide="hideTagStep2">
+			<label><span class="{{secIconClass}}" style="vertical-align: middle;"></span>
+				Step 2</label>
+			<br/>
+			<label style="font-weight:normal;">{{question2Data.quesText}}</label>
+			<div id="tagStep2Div" class="form-group" style="padding-top: 1em;">
+      			<div class="dropdown" style="max-width: 500px;min-width: 240px;">
+      			
+      				<a class="{{secAnsClass}}" style="width:100%;" ng-model="displaySecAns" id="step2Dropdown"
+							data-toggle="dropdown" href="#">{{displaySecAns}} <b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu"	aria-labelledby="dropdownAppSite" style="width:100%;">
+						<li ng-repeat="secAns in question2Data.lstTags">
+							<span ng-click="getChildQues(secAns,question2Data.quesId)">{{secAns.label}}</span>
+						</li>
+					</ul>
+					<px-tooltip for=appSiteDropdown	 smartOrientation	tooltip-message="Select Answer"></px-tooltip>
+      			</div>
+    		</div>
+		</div>
+		<div id="tagStep3Div" class="tagStepDiv" ng-hide="hideTagStep3">
+			<label><span class="{{thirdIconClass}}" style="vertical-align: middle;"></span>
+				Step 3</label>
+			<br/>
+			<label style="font-weight:normal;">{{question3Data.quesText}}</label>
+			<div id="tagStep3Div" class="form-group" style="padding-top: 1em;">
+      			<div class="dropdown" style="max-width: 500px;min-width: 240px;">
+      			
+      				<a class="{{thirdAnsClass}}" style="width:100%;" ng-model="displayThirdAns" id="step3Dropdown"
+							data-toggle="dropdown" href="#">{{displayThirdAns}} <b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu"	aria-labelledby="dropdownAppSite" style="width:100%;">
+						<li ng-repeat="thirdAns in question3Data.lstTags">
+							<span ng-click="getChildQues(thirdAns,question3Data.quesId)">{{thirdAns.label}}</span>
+						</li>
+					</ul>
+					<px-tooltip for=appSiteDropdown	 smartOrientation	tooltip-message="Select Answer"></px-tooltip>
+      			</div>
+    		</div>
+		</div>
+		<div id="tagStep4Div" class="tagStepDiv" ng-hide="hideTagStep4">
+			<label><span class="{{fourthIconClass}}" style="vertical-align: middle;"></span>
+				Step 4</label>
+			<br/>
+			<label style="font-weight:normal;">{{question4Data.quesText}}</label>
+			<div id="tagStep4Div" class="form-group" style="padding-top: 1em;">
+      			<div class="dropdown" style="max-width: 500px;min-width: 240px;">
+      			
+      				<a class="{{fourthAnsClass}}" style="width:100%;" ng-model="displayFourthAns" id="step4Dropdown"
+							data-toggle="dropdown" href="#">{{displayFourthAns}} <b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu"	aria-labelledby="dropdownAppSite" >
+						<li ng-repeat="fourthAns in question4Data.lstTags">
+							<span ng-click="getChildQues(fourthAns,question4Data.quesId)">{{fourthAns.label}}</span>
+						</li>
+					</ul>
+					<px-tooltip for=appSiteDropdown	 smartOrientation	tooltip-message="Select Answer"></px-tooltip>
+      			</div>
+    		</div>
+		</div>
+		<div ng-hide="hideTagResults">
+			<table style="width:100%">
+				<tr style="background-color: #2b5ea2;">
+					<td>
+						<label class="label--inline" style="width: 100%;font-size: 1.3em; font-weight: normal;height: 30px; padding: 5px;  background-color: #3670ea; color: #fff;">Results</label>
+					</td>
+					<td>
+						<div class="form-inline" style="width:100%;">
+							<div style="float:right;">
+								<input type="search" class="text-input input--regular" ng-model="tagFilter" 
+								    style="font-weight: normal;background-color: #fff; padding-left: 4px;float: right;margin-right: 5px"
+									placeholder="Enter filter text" maxlength="15" id="tagFilterText">
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<ul  style="list-style-type: none;">
+				<li ng-repeat="tags in tagsList|filter:tagFilter">
+					<div class="tagListDiv">
+						<label>{{tags.strCountryName}}</label>
+						<label>{{tags.strExportStatus}}</label>
+						<label>{{tags.strClassCode}}</label>
+						<label>{{tags.strCountryCode}}</label>
+						<label>{{tags.strRationale}}</label>
+					</div>
+				
+			</li></ul>
+			<input type=button class="btn1 btn-primary btn--large" style="margin-right: 2em;" value="Apply Tag" ng-click="applyTag()">
+		</div>
+	</div>
+	<div id="stwTagDiv" class="panel panel-primary" ng-hide="hideSTWDiv">
+	<div class="panel-heading" style="background-color: #2b5ea2; text-align: center;">Single Tagging Wizard for {{countryId}}</div>
+      <div class="panel-body" style="padding: 1px; background-color: #e3eef4;">
+      <div class="stwCountry-desk">
+      <div class="col-sm-2" style="padding-right:0px; padding-left: 2px;" >
+			<div  id="countrySelectDiv" class="form-inline" style="width:100%;overflow-y:auto;">
+				<span id="countryBtn" class={{obj.clas}} ng-repeat="obj in tempCountryList" style="width:100%;margin-bottom: 0.1em;text-align: left;padding: 0 .2em;border-radius: 0.4em;border:0px;" ng-click="replaceCountry(obj);" >
+				<img src="../images/flag/{{obj.val}}.png" alt="{{obj.val}}" height="20" width="20">
+				{{obj.val}} </span>
+			</div>
+	</div>
+	<div id="formId" style="display: none;padding: 0px; font-size: 12px;" class="col-sm-10 "  >
+			<div class="panel panel-primary" style="border:0px;">
+      <div class="panel-body" style="background-color:#e3eef4;padding: 1px">
+
+			<div id="tagMessageId" class="alert alert-success"  > {{message}} </div>
+				<table style="width: 100%">
+					<tbody>
+						<tr>
+							<td><label class="form-group col-sm-6">Jurisdiction:</label>
+								<div id="jurisSelectDiv" class="form-inline col-sm-6"  style="background-color:#e3eef4">
+								<span ng-repeat="juris in jurisdictionList" style="padding: 1px;"> 
+								<input id="{{juris.name}}"    class={{jurisBtnClass}} ng-click="setJursid(juris.name)" type="button" value="{{juris.name}}" >
+								</span>
+							</div>
+							</td>
+						</tr>
+						<tr>
+							<td><label class="form-group col-sm-6">Complementary/Supporting Documentation Review:</label>
+								<div class="col-sm-6" >
+									<input id="jurisBtn" class="{{complYClass}}" ng-click="setCplmtry('Yes')" type="button" value="Yes"> 
+									<input id="jurisBtn1" class="{{complNClass}}" ng-click="setCplmtry('No')" type="button" value="No">
+								</div></td>
+						</tr>
+						<tr>
+							<td><label class="form-group col-sm-6">Classification ({{tempUML}}):&nbsp;&nbsp;</label>
+								<div class="col-sm-6">
+								<textarea  class="form-control" placeholder="Please enter Classification" style="width:100%;background-color:#e3eef4;" required="required"  ng-model="classification" ></textarea>
+								</div></td>
+						</tr>
+						<tr>
+							<td><label class="form-group col-sm-6">Is the item subject to the ITAR:&nbsp;&nbsp;</label>
+								<div class="col-sm-6" >
+									<input id="itarBtn" class="{{itarYClass}}" type="button" ng-click="setItar('Yes')"  value="Yes"> 
+									<input id="itarBtn1" class="{{itarNClass}}" type="button" ng-click="setItar('No')" value="No">
+								</div></td>
+						</tr>
+						<tr>
+							<td><label class="form-group col-sm-6">Reason item not subject to ITAR:&nbsp;&nbsp;</label>
+								<div class="col-sm-6">
+									<a class="{{ctrySiteClass}}" style="width: 100%; text-align: left;" ng-model="displayAppSite" id="appSiteDropdown" data-toggle="dropdown" 
+									href="#">{{ displayAppSite }} <div style="float: right;"><b class="caret"></b></div></a>
+									<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownAppSite" style="width: 100%;">
+										<li ng-repeat="appSite in appSiteList">
+										<span ng-click="appSiteChange(appSite)">{{appSite.value}}</span>
+										</li>
+									</ul>
+								</div></td>
+						</tr>
+						<tr>
+							<td style="background-color:#e3eef4; "><label class="form-group col-sm-6">Select {{tempUML}} code:&nbsp;&nbsp;</label>
+								<div class="col-sm-6">
+										<div>
+										<div angucomplete-alt id="codeID" placeholder="Enter code" style="max-width: 27em;background-color:#e3eef4;" pause="100"
+											input-class="form-control" match-class="highlight" selected-object="afterSelectedCode" ng-model="umlCode"
+											local-data="countryList" search-fields="val" title-field="val"></div>
+									</div>
+										<div style="max-width: 27em; border-style: solid; border-width: 1px; border-color: #66afe9;background-color:#e3eef4;">
+										<ul style="width: 100%;">
+											<li ng-repeat="code in SelectedCode"><span>{{code.val}}</span>
+											</li>
+										</ul>
+									</div>
+								</div></td>
+						</tr>
+						<tr>
+							<td><label class="validation-error col-sm-6" style="font-weight: normal;">
+							<i>Please enter rationale for classifications selected (Max:2000 characters including classification rationale)&nbsp;&nbsp;</i>
+							</label>
+								<div class="col-sm-6">
+									<textarea  class="form-control" placeholder="Enter Rationale" style="width:100%;max-width: 27em;background-color:#e3eef4;" required="required"  ng-model="selectedRationale" ></textarea>
+								</div></td>
+						</tr>
+						<tr ><td>
+						<div class="breadcrumb validation-error" style="margin-bottom:0px;">3rd party Determination Government Ruling</div>
+						</td>
+						</tr>
+						<tr >
+							<td>
+							<label class=" validation-error col-sm-6" style="font-weight:normal;"><i>Is Tag Supplied by a 3rd party?&nbsp;&nbsp;</i></label>
+							<div class="col-sm-6">
+								<input id="jurisBtn" class="{{tagyClass}}"  ng-click="setTag('Yes')" type="button" value="Yes">
+								<input id="jurisBtn" class="{{tagNClass}}"  ng-click="setTag('No')"  type="button" value="No">
+							</div>
+							</td>
+						</tr>
+						<tr >
+							<td>
+							<label class=" col-sm-6">Name of the 3rd Party providing tag&nbsp;&nbsp;</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control"  ng-model="tagName" id="thirdpartyName"  style="width:100%;max-width: 27em;background-color:#e3eef4;" required="required" maxlength="25" id="thirdpartyName" placeholder="Enter 3rd party providing Tag">
+						</div>
+							</td>
+						</tr>
+						<tr >
+							<td>
+							<label class=" col-sm-6">Company contact information&nbsp;&nbsp;</label>
+						<div class="col-sm-6">
+							<input type="text"  class="form-control"  ng-model="contactInfo" style="width:100%;max-width: 27em;background-color:#e3eef4;" required="required" maxlength="25" id="thirdpartyName" placeholder="Enter company contact information">
+						</div>
+							</td>
+						</tr>
+						<tr >
+							<td>
+							<label class=" validation-error col-sm-6" style="font-weight:normal;"><i>Is this Government supplied Jurisdiction/Classifications?&nbsp;&nbsp;</i></label>
+						<div class="col-sm-6">
+							<input id="jurisBtn" class="{{isGovYClass}}"  ng-click="setIsGov('Yes')"  type="button" value="Yes">
+							<input id="jurisBtn" class="{{isGovNClass}}"  ng-click="setIsGov('No')"  type="button" value="No">
+						</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+							<label class=" col-sm-6">Government Case Number&nbsp;&nbsp;</label>
+						<div class="col-sm-6">
+						<input type="text"  class="form-control"  ng-model="caseNum" style="width:100%;max-width: 27em;background-color:#e3eef4;" required="required" maxlength="25" id="caseNum" placeholder="Enter Government Case Number">
+						</div>
+							</td>
+						</tr>
+						<tr >
+							<td>
+							<label class=" col-sm-6">Approved Date&nbsp;&nbsp;</label>
+						<div  class=" col-sm-6">
+						<div class="input-group" moment-picker="ctrl.datepicker"	format="YYYY-MM-DD">
+							<input class="form-control" style="max-width: 20em;background-color:#e3eef4;" placeholder="Select a date"  ng-model="ctryDate" ng-model-options="{ updateOn: 'blur' }" >
+							<span class="input-group-addon"> <i	class="glyphicon glyphicon-calendar"></i></span>
+						</div>
+						</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+						
+			<div style="text-align: center; ">
+			<input	class="btn1 btn--primary"	type=submit value="Reset" ng-click="removeCountryTagInfo()">&nbsp;&nbsp;
+			<input	class="btn1 btn--primary"	type=submit value="Save" ng-click="addToArray();">&nbsp;&nbsp;
+			<input	class="btn1 btn--primary"	type=submit value="Save & Continue" ng-click="addContinue();">
+			</div>
+			</div>
+			</div>
+  
+  
+</div>
+     </div>
+     	 
+    <div class="stwCountry-mobile"> 
+ 	<div class="panel-group" id="accordion">
+    <div class="panel panel-default" ng-repeat="obj in tempCountryList">
+     	 <div class="panel-heading">
+          	<a data-toggle="collapse" class="btn btn-primary dropdown-toggle" style="width:100%" data-parent="#accordion" href="#{{obj.key}}" ng-click="replaceCountry1(obj);">{{obj.val}}</a>
+      	</div>
+      	<div id="{{obj.key}}" class="panel-collapse collapse">
+       	 <div ></div>
+     	 </div>
+   	</div>
+  </div>
+  </div>
+	</div>
+    </div>
+	</div>
+	<div id="confirmDiv" class="tab-pane fade">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading" style="text-align: center;">Review Tagging Details</div>
+      <div class="panel-body" style="padding: 5px;">
+      <div class="form-inline" style="box-sizing: border-box;">
+				<div class="form-group tagInfoD" style="vertical-align: top;padding: 2px;" ng-repeat="obj in tempObjDataList">
+					<a href="#" class="btn btn-primary btn-lg" style="width: 100%; word-wrap: break-word;vertical-align: bottom;" > {{obj.key}}
+					</a>
+					<div  class="collapse well well-sm in " style="width: 100%;word-wrap: break-word; padding: 0px; margin-bottom: 0px;">
+ 					Object Tagging Information will come here. <br>
+					 <br>United States
+					  <br>India
+					   <br>Austria
+					    <br>Poland
+					     <br>United Kingdom
+					</div>
+				</div>
+			</div>
+			<div id="objNavBar2" style="text-align: center;">
+					<ul class="pagination">
+						<li><a href="#" ng-click="tagObjInit(0)">First</a></li>
+						<li><a href="#" ng-click="tagObjPrev()" >Prev</a></li>
+						<li><a href="#"ng-click="tagObjNext()" >Next</a></li>
+						<li><a href="#" ng-click="tagObjLast()">Last</a></li>
+					</ul>
+				</div>
+							<table class="table table-hover">
+										<thead>
+											<tr style="background-color: #3e87e8; text-align: center; color: white">
+												<th>Country Name</th>
+												<th>Previous Export Status</th>
+												<th>Current Export Status</th>
+												<th>GE QMS Format</th>
+												<th>Rationale</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="tagObj in tagObject">
+												<td>{{tagObj.countryId}}</td>
+												<td>UNK</td>
+												<td>{{tagObj.classification}}</td>
+												<td>{{tagObj.contactInfo}}</td>
+												<td>{{tagObj.selectedRationale}}</td>
+											</tr>
+										</tbody>
+							</table>
+							</div>
+							</div>
+							<br>
+							  <div style="text-align: center; ">
+			<input	class="btn1 btn--primary"	type=submit value="Submit" >&nbsp;&nbsp;
+</div>
+							
+  </div>
+  
+
+	</div>
+	</div>
+	
+
+</px-card>
+<style>
+p.one {
+	border-color: #ebebeb;
+	border-style: solid;
+	border-width: 8px;
+	border-radius: 4px;
+}
+.well{
+background-color: white;
+}
+input[type=text] {
+	 background-color: #e3eef4;
+}
+.btn-warning{
+background-color:#e3eef4;
+color: black;
+}
+.btn-warning:hover,
+.btn-warning:focus {
+  background-color: #e3eef4;
+  color: black;
+}
+.panel-primary>.panel-heading{
+height: 27px;
+}
+</style>
+<style>
+.panel-heading{
+padding: 0px 0px;
+}
+
+
+
+/* Hover tooltips */
+.field-tip {
+    position:relative;
+    cursor:help;
+}
+    .field-tip .tip-content {
+        position:absolute;
+        top:-10px; /* - top padding */
+        right:9999px;
+        width:200px;
+        margin-right:-220px; /* width + left/right padding */
+        padding:10px;
+        color:black;
+        z-index:9999;
+        background:#e3eef4;
+        -webkit-box-shadow:2px 2px 5px #e3eef4;
+           -moz-box-shadow:2px 2px 5px #e3eef4;
+                box-shadow:2px 2px 5px #e3eef4;
+        opacity:0;
+        -webkit-transition:opacity 250ms ease-out;
+           -moz-transition:opacity 250ms ease-out;
+            -ms-transition:opacity 250ms ease-out;
+             -o-transition:opacity 250ms ease-out;
+                transition:opacity 250ms ease-out;
+    }
+        /* <http://css-tricks.com/snippets/css/css-triangle/> */
+        .field-tip .tip-content:before {
+            content:' '; /* Must have content to display */
+            position:absolute;
+            top:50%;
+            left:-18px; /* 2 x border width */
+            width:0;
+            height:0;
+            margin-top:-8px; /* - border width */
+            border:8px solid transparent;
+            border-right-color:#333;
+        }
+        .field-tip:hover .tip-content {
+            right:-20px;
+            opacity:1;
+        }
+</style>
+
+<script>
+     function changeColor(elem){
+    	  if(elem.checked){
+    		 console.log("Changing");
+    	      elem.parentNode.parentNode.style.backgroundColor='#0a9ec1';
+    	   }else{
+    		   elem.parentNode.parentNode.style.backgroundColor='inherit';
+    	   }
+     }
+	</script> 

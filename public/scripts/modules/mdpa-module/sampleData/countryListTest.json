@@ -1,0 +1,26 @@
+{
+	"lstCountry":
+		[
+		{"val":"Singapore","key":"SG"},
+		{"val":"Brazil","key":"BR"},
+		{"val":"Spain","key":"ES"},
+		{"val":"Mexico","key":"MX"},
+		{"val":"Russia","key":"RU"},
+		{"val":"Vietnam","key":"VN"},
+		{"val":"United States","key":"US"},
+		{"val":"United Kingdom","key":"UK"},
+		{"val":"European Union","key":"EU"},
+		{"val":"Hungary","key":"HU"},
+		{"val":"India","key":"IN"},
+		{"val":"Austria","key":"AT"},
+		{"val":"Germany","key":"DE"},
+		{"val":"France","key":"FR"},
+		{"val":"Italy","key":"IT"},
+		{"val":"Norway","key":"NO"},
+		{"val":"China","key":"CN"},
+		{"val":"Canada","key":"CA"},
+		{"val":"Switzerland","key":"CH"},
+		{"val":"SRI LANKA","key":"SL"}
+		
+		]
+}

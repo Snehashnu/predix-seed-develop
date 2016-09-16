@@ -1,0 +1,856 @@
+<style>
+
+.aha-table-0 .scroll-body.aha-table {
+    display: block;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-bottom: 1rem;
+    padding-left: 1px;
+    padding-right: 1px;
+    font-size: 11px;
+    color: #000000;}
+.header-shadow{
+    background-image: url('../images/ge-turbine3.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: -9em;
+}
+#smViewDiv{
+	display:none;}
+.fa-fw {
+	color: #7c7c84;
+}
+#selectViewDiv{
+	display:block;}
+#searchResultsTable{
+	display:none;}
+
+@media(max-width:768px){
+#expExcelBtnText{
+	display:none;}
+#expExcelBtnTextAdmin{
+	display:none;}
+#selectViewDiv{
+	display:none;}
+#searchResultsList{
+	display:block;}
+#searchResultsTable{
+	display:none;}
+#expExcelAdmin{
+	display:none;}
+#expExcel{
+	display:none;}
+.header-shadow{
+    background-image: url('../images/ge-turbine.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: -2em;}
+#searchHistoryDiv{
+	display:none;}
+#searchFilterDiv{
+	display:none;}
+#smViewDiv{
+	display: inline-block;}
+.modal__title{
+	display:none;}
+a:focus, a:hover{
+text-decoration:none;
+color:#3c763d}	
+}
+</style>
+<px-card header-text="General > Advance Search" style="margin:2px;">
+
+<div class="form-inline">
+	<div id="selectViewDiv" class="col-sm-12" style="padding-bottom: 5px;" >
+		<div style="float:right;">
+			<input id="listViewRadio"  type=radio  ng-model="viewSelected.view" 
+				ng-change="changeView();" value="list" checked>
+			<label class=label--inline for="listViewRadio">Show in List View</label>
+			<input id="tableViewRadio" class=u-ml++  type=radio ng-model="viewSelected.view" 
+				ng-change="changeView();"  value="table">
+			<label class=label--inline for="tableViewRadio">Show in Tabular View</label>
+		</div>
+	</div>
+	<div class="col-sm-7 col-lg-7 col-md-7">
+	<div id='searchInputDiv' class="panel panel-primary"
+		style="padding-right: 0px;padding-left: 0px;">
+		<div class="panel-heading" style="background-color:#306538;"><i style="padding-right: 10px;" class="fa fa-search" aria-hidden="true"></i>Search MDPA</div>
+		<div class="panel-body header-shadow" style="min-height: 7.2em;" >
+		<form class="form-inline">
+			<input type="search" class="text-input input--regular" style="max-width: 27em;padding-left: 5px;" required="required"  id="searchTextId" placeholder="Enter Search Text" ng-model="searchText">
+			<input type="submit" class="btn1 btn--primary" value="GO" ng-click="search('')" style="margin-top: 5px;">
+			&nbsp;&nbsp;
+			<a href="#">
+         		 <span class="glyphicon glyphicon-question-sign textShadow" style="color:#fff;font-size: 1.8em;vertical-align: middle;"></span>
+        	</a>
+        	<label class="form-field__help validation-warning textShadow"
+							style="font-weight: bold;color:#fff"><i>{{resultStatement}}</i></label>
+			
+		</form>
+		</div>
+	</div>
+	</div>
+	<div id='searchHistoryDiv' class="col-sm-5 col-lg-5 col-md-5">
+	<div  class="panel panel-primary" style="padding-right: 0px;padding-left: 0px;min-height:9.1em;background-color:#eee;">
+		<div class="panel-heading" style="background-color:#306538;">
+		<i style="padding-right: 10px;" class="fa fa-history" aria-hidden="true"></i>Search History
+		<!-- <span style="float:right;font-size:12px;"><i>more</i></span> -->
+		</div>
+		<div class="panel-body" style="padding-bottom: 0;padding-top: 5px;">
+		<ul type="1" style="margin: 0;padding-left:1em;columns:2;column-gap:2em;">
+			<li ng-repeat="history in searchHistory" style="font-size:12px;cursor: pointer;">
+				<a style="color: #525156;font-weight: bold;" ng-click="search(history.name);">{{history.name}}</a>
+			</li>
+		</ul>
+		</div>
+	</div>
+	</div>
+</div>
+<div class="col-sm-12">
+	<div id='searchFilterDiv' class="col-sm-2" style="padding-right: 5px; padding-left: 1px;">
+	<div class="panel panel-primary" ng-hide="hideFilterTable">
+		<div class="panel-heading" style="background-color:#306538;"><span class="glyphicon glyphicon-filter" style="padding-right: 5px;"></span>Search Filter</div>
+		<div class="panel-body" style="padding:0;">
+			<table id="filterTable" style="width: 100%;background-color: #eee">
+				<tr>
+					<td><label style="text-align: center;">Application Site
+							<span style="float:right;padding-top: 4px;" class="glyphicon glyphicon-search"  data-toggle="collapse" data-target="#filterAppSite"></span>
+								<div id="filterAppSite" class="collapse">
+    								<input type="search" class="text-input input--regular" ng-model="appSiteFilter"
+    								style="font-weight: normal;background-color: #fff;padding-left: 4px;" 
+    								placeholder="Enter filter text" required="required" maxlength="15" id="thirdpartyName">
+  								</div>
+						</label>
+						<hr style="margin: 0 0 4px 0;border-color: #b6c3b6;border-width: 2px;">
+						<ul style="padding-right: 7px;margin-bottom: 0px;">
+							<li ng-repeat="appSite in appSiteFilters |filter:appSiteFilter |limitTo:appSiteFilterCount" style="font-size: 12px;cursor: pointer;">
+								<div>
+									<a style="color: #525156;" ng-click="refineSearch('ApplicationSite',appSite.filterchildCount);">{{appSite.filterchild}} ({{appSite.filterchildCount}})</a>
+									<a class="glyphicon glyphicon-remove deleteIcon"
+										ng-hide="removeAppSiteFilter" ng-click="removeFilter('ApplicationSite',appSite.filterchild);"></a>
+								</div>
+							</li>
+						</ul>
+						<div style="float: right;padding-right: 4px;" ng-hide="hideAppSiteMore">
+							<a style="font-size: 10px;" href="" ng-click="addMore();"> <span
+								id="showMoreAppSite" class="glyphicon glyphicon-menu-down">
+									{{appSiteFilters.length-appSiteFilterCount>0 ? appSiteFilters.length-appSiteFilterCount+" more":"show less"}}</span></span>
+							</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td><label style="text-align: center;">Application Type
+							<span style="float:right;padding-top: 4px;" class="glyphicon glyphicon-search"  data-toggle="collapse" data-target="#filterAppType"></span>
+								<div id="filterAppType" class="collapse">
+    								<input type="search" class="text-input input--regular" ng-model="appTypeFilterText"
+    								style="font-weight: normal;background-color: #fff;padding-left: 4px;" 
+    								placeholder="Enter filter text" required="required" maxlength="15" id="thirdpartyName">
+  								</div>
+						</label>
+						<hr style="margin: 0 0 4px 0;border-color: #b6c3b6;border-width: 2px;">
+						<ul style="padding-right: 7px;margin-bottom: 0px;">
+							<li ng-repeat="appType in appTypeFilters |filter:appTypeFilterText |limitTo:appTypeFilterCount" style="font-size: 12px;cursor: pointer;">
+								<a style="color: #525156;" ng-click="refineSearch('ApplicationType',appType.filterchildCount);">{{appType.filterchild}} ({{appType.filterchildCount}})</a>
+								<a class="glyphicon glyphicon-remove deleteIcon" 
+										ng-hide="removeAppTypeFilter" ng-click="removeFilter('ApplicationType',appType.filterchild);"></a>
+							</li>
+						</ul>
+						<div style="float: right;padding-right: 4px;" ng-hide="hideAppTypeMore">
+							<a style="font-size: 10px;" href="" ng-click="addMore();"> <span
+								id="showMoreAppType" class="glyphicon glyphicon-menu-down">
+									{{appTypeFilters.length-appTypeFilterCount>0 ? appTypeFilters.length-appTypeFilterCount+" more":"show less"}}</span>
+							</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td><label style="text-align: center;">Tagger Name
+							<span style="float:right;padding-top: 4px;" class="glyphicon glyphicon-search"  data-toggle="collapse" data-target="#filterTagger"></span>
+								<div id="filterTagger" class="collapse">
+    								<input type="search" class="text-input input--regular" ng-model="taggerFilter"
+    								style="font-weight: normal;background-color: #fff;padding-left: 4px;" 
+    								placeholder="Enter filter text" required="required" maxlength="15" id="thirdpartyName">
+  								</div>
+						</label>
+						<hr style="margin: 0 0 4px 0;border-color: #b6c3b6;border-width: 2px;">
+						<ul style="padding-right: 7px;margin-bottom: 0px;">
+							<li ng-repeat="tagger in taggerFilters |filter:taggerFilter |limitTo:taggerFilterCount" style="font-size: 12px;cursor: pointer;">
+								<a style="color: #525156;" ng-click="refineSearch('Tagger',tagger.filterchildCount);">{{tagger.filterchild}} ({{tagger.filterchildCount}})</a>
+								<a class="glyphicon glyphicon-remove deleteIcon"
+										ng-hide="removeTaggerFilter" ng-click="removeFilter('Tagger',tagger.filterchild);"></a>
+							</li>
+						</ul>
+						<div style="float: right;padding-right: 4px;" ng-hide="hideTaggerMore">
+							<a style="font-size: 10px;" href="" ng-click="addMore();"> <span
+								id="showMoreTagger" class="glyphicon glyphicon-menu-down">
+									{{taggerFilters.length-taggerFilterCount>0 ? taggerFilters.length-taggerFilterCount+" more":"show less"}}</span>
+							</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td><label style="text-align: center;">Export Status
+							<span style="float:right;padding-top: 4px;" class="glyphicon glyphicon-search"  data-toggle="collapse" data-target="#filterExpStatus"></span>
+								<div id="filterExpStatus" class="collapse">
+    								<input type="search" class="text-input input--regular" ng-model="expStatusFilterText"
+    								style="font-weight: normal;background-color: #fff;padding-left: 4px;" 
+    								placeholder="Enter filter text" required="required" maxlength="15" id="thirdpartyName">
+  								</div>
+						</label>
+						<hr style="margin: 0 0 4px 0;border-color: #b6c3b6;border-width: 2px;">
+						<ul style="padding-right: 7px;margin-bottom: 0px;">
+							<li ng-repeat="expStatus in expStatusFilters |filter:expStatusFilterText |limitTo:expStatusFilterCount" style="font-size: 12px;cursor: pointer;">
+								<a style="color: #525156;" ng-click="refineSearch('ExportStatus',expStatus.filterchildCount);">{{expStatus.filterchild}} ({{expStatus.filterchildCount}})</a>
+								<a class="glyphicon glyphicon-remove deleteIcon"
+										ng-hide="removeExpStatusFilter" ng-click="removeFilter('ExportStatus',expStatus.filterchild);"></a>
+							</li>
+						</ul>
+						<div style="float: right;padding-right: 4px;" ng-hide="hideExpStatusMore">
+							<a style="font-size: 10px;" href="" ng-click="addMore();"> <span
+								id="showMoreExpStatus" class="glyphicon glyphicon-menu-down">
+									{{expStatusFilters.length-expStatusFilterCount>0 ? expStatusFilters.length-expStatusFilterCount+" more":"show less"}}</span>
+							</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td><label style="text-align: center;">ECCN
+							<span style="float:right;padding-top: 4px;" class="glyphicon glyphicon-search"  data-toggle="collapse" data-target="#filterEccn"></span>
+								<div id="filterEccn" class="collapse">
+    								<input type="search" class="text-input input--regular" ng-model="eccnFilterText"
+    								style="font-weight: normal;background-color: #fff;padding-left: 4px;" 
+    								placeholder="Enter filter text" required="required" maxlength="15" id="thirdpartyName">
+  								</div>
+						</label>
+						<hr style="margin: 0 0 4px 0;border-color: #b6c3b6;border-width: 2px;">
+						<ul style="padding-right: 7px;    margin-bottom: 0px;">
+							<li ng-repeat="eccn in eccnFilters |filter:eccnFilterText |limitTo:eccnFilterCount" style="font-size: 12px;cursor: pointer;">
+								<a style="color: #525156;" ng-click="refineSearch('ECCN',eccn.filterchildCount);">{{eccn.filterchild}} ({{eccn.filterchildCount}})</a>
+								<a class="glyphicon glyphicon-remove deleteIcon"
+										ng-hide="removeEccnFilter" ng-click="removeFilter('ECCN',eccn.filterchild);"></a>
+							</li>
+						</ul>
+						<div style="float: right;padding-right: 4px;" ng-hide="hideEccnMore">
+							<a style="font-size: 10px;" href="" ng-click="addMore();"> <span
+								id="showMoreEccn" class="glyphicon glyphicon-menu-down">
+									{{eccnFilters.length-eccnFilterCount>0 ? eccnFilters.length-eccnFilterCount+" more":"show less"}}</span>
+							</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td><label style="text-align: center;">Date Range
+							<span id="dateRangeIcon" style="float:right;padding-top: 4px;display:none;" class="glyphicon glyphicon-search"  data-toggle="collapse" data-target="#filterDateRange"></span>
+						</label>
+						<div id="filterDateRange" class="collapse">
+									<div class="input-group" moment-picker="datepickerStart"
+										format="YYYY-MM-DD">
+										<input class="form-control" style="max-width: 20em;background-color: #fff;"
+											placeholder="Select start date" readonly="readonly"
+											ng-model="datepickerStart"
+											ng-model-options="{ updateOn: 'blur' }"> <span
+											class="input-group-addon"> <i
+											class="glyphicon glyphicon-calendar"></i></span>
+									</div>
+									<label style="font-weight: bold;color:#7c7c84;text-align: center;width:100%;">to</label>
+									<div class="input-group" moment-picker="datepickerEnd"
+										format="YYYY-MM-DD">
+										<input class="form-control" style="max-width: 20em;background-color: #fff;"
+											placeholder="Select end date" readonly="readonly"
+											ng-model="datepickerEnd"
+											ng-model-options="{ updateOn: 'blur' }"> <span
+											class="input-group-addon"> <i
+											class="glyphicon glyphicon-calendar"></i></span>
+									</div>
+									<div ng-hide="hideRangeError">
+									<ul style="padding-left: 1.5em;margin: 0;">
+										<li ng-repeat="msg in rangeErrorMsg">
+											<label class="validation-error" style="font-weight:normal;width:100%;font-size: 12px;">
+												<i>{{msg}}</i>
+											</label>
+										</li>
+									</ul>
+									</div>
+									<input type="submit" class="btn1 btn--primary" value="Search within range" ng-click="rangeFilter()" style="margin-bottom: 5px;width:100%;">
+  								</div>
+						<hr style="margin: 0 0 4px 0;border-color: #b6c3b6;border-width: 2px;">
+						<ul style="padding-right: 7px;margin-bottom: 0px;">
+							<li ng-repeat="date in dateRangeFilters |filter:dateRangeFilter |limitTo:dateRangeFilterCount" style="font-size: 12px;cursor: pointer;">
+								<a style="color: #525156;" ng-click="refineSearch('LastUpdated',date.filterchildCount);">{{date.filterchild}}</a>
+								<a class="glyphicon glyphicon-remove deleteIcon"
+										ng-hide="removeDateFilter" ng-click="removeFilter('LastUpdated',date.filterchild);"></a>
+							</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td><label style="text-align: center;">Country
+							<span style="float:right;padding-top: 4px;" class="glyphicon glyphicon-search"  data-toggle="collapse" data-target="#filterCountry"></span>
+								<div id="filterCountry" class="collapse">
+    								<input type="search" class="text-input input--regular" ng-model="countryFilter"
+    								style="font-weight: normal;background-color: #fff;padding-left: 4px;" 
+    								placeholder="Enter filter text" required="required" maxlength="15" id="thirdpartyName">
+  								</div>
+						</label>
+						<hr style="margin: 0 0 4px 0;border-color: #b6c3b6;border-width: 2px;">
+						<ul style="padding-right: 7px;margin-bottom: 0px;">
+							<li ng-repeat="country in countryFilters |filter:countryFilter |limitTo:countryFilterCount" style="font-size: 12px;cursor: pointer;">
+								<a style="color: #525156;" ng-click="refineSearch('Country',country.filterchildCount);">{{country.filterchild}} ({{country.filterchildCount}})</a>
+								<a class="glyphicon glyphicon-remove deleteIcon"
+										ng-hide="removeCountryFilter" ng-click="removeFilter('Country',country.filterchild);"></a>
+							</li>
+						</ul>
+						<div style="float: right;padding-right: 4px;" ng-hide="hideCountryMore">
+							<a style="font-size: 10px;" href="" ng-click="addMore();"> <span
+								id="showMoreCountry" class="glyphicon glyphicon-menu-down">
+									{{countryFilters.length-countryFilterCount>0 ? countryFilters.length-countryFilterCount+" more":"show less"}}</span>
+							</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+
+
+		</div>
+	</div>
+</div>
+
+<div class="col-sm-10" style="padding-right: 0;padding-left: 0;" ng-hide="hideResultTable">
+	<div id="searchResultsList" class="panel panel-primary col-lg-12 col-sm-12 col-md-12" 
+		style="padding-right: 0px;padding-left: 0px;">
+		<div style="background-color:#eee;">
+			<table style="width:100%;">
+     	<tr style="background-color: #3670ea;">
+     		<td id="smViewDiv">
+				<div  style="float:left;">
+					<div style="display: inline-block;">
+						<button id="smFilterBtn" class="btn"	data-toggle="collapse" data-target="#toggleFilter"
+							  style="background-color: #fff;margin-left: 5px;color: #3670ea;"> 
+							<span class="glyphicon glyphicon-filter"></span>
+							<px-tooltip	smartOrientation tooltip-message="Open search filter panel"></px-tooltip>
+						</button>
+						<div id="toggleFilter" class="collapse"
+							style="position: absolute;">
+							<div>
+
+				<!-- SearchFilter for mobileview -->
+							<div id='searchFilterDiv' class="col-sm-2 visible-xs"
+								style="padding-right: 5px; padding-left: 1px;">
+								<div class="panel panel-primary uparrowdiv"
+									style="border-style: solid; border-width: 2px; border-color: #559a5f; box-shadow: 5px 10px 5px #888888;"
+									ng-hide="hideFilterTable">
+									<div class="panel-heading"
+										style="background-color: #306538;">
+										<span class="glyphicon glyphicon-filter"
+											style="padding-right: 5px;"></span>Search Filter
+									</div>
+									<div class="panel-body" style="padding: 0;">
+										<table id="filterTable" style="width: 100%">
+											<tr>
+												<td><label style="text-align: center;">Application
+														Site <span
+														style="float: right; padding-top: 4px; padding-right: 5px;"
+														class="glyphicon glyphicon-search"
+														data-toggle="collapse" data-target="#filterAppSiteM"></span>
+														<div id="filterAppSiteM" class="collapse">
+															<input type="search"
+																class="text-input input--regular"
+																ng-model="appSiteFilter"
+																style="font-weight: normal; background-color: #fff; padding-left: 4px;"
+																placeholder="Enter filter text" required="required"
+																maxlength="15" id="thirdpartyName">
+														</div>
+												</label>
+													<hr	style="margin: 0 0 4px 0; border-color: #b6c3b6; border-width: 2px;">
+													<ul style="padding-right: 7px; margin-bottom: 0px;">
+														<li
+															ng-repeat="appSite in appSiteFilters |filter:appSiteFilter |limitTo:appSiteFilterCount"
+															style="font-size: 12px; cursor: pointer;">
+															<div>
+																<a
+																	ng-click="refineSearch('ApplicationSite',appSite.filterchildCount);clickFilterBtn();">{{appSite.filterchild}}
+																	({{appSite.filterchildCount}})</a> <a
+																	class="glyphicon glyphicon-remove deleteIcon"
+																	ng-hide="removeAppSiteFilter"
+																	ng-click="removeFilter('ApplicationSite',appSite.filterchild);"></a>
+															</div>
+														</li>
+													</ul>
+													<div style="float: right; padding-right: 4px;"
+														ng-hide="hideAppSiteMore">
+														<a style="font-size: 10px;" href=""
+															ng-click="addMore();"> <span id="showMoreAppSite"
+															class="glyphicon glyphicon-menu-down">
+																{{appSiteFilters.length-appSiteFilterCount>0 ?
+																appSiteFilters.length-appSiteFilterCount+"
+																more":"show less"}}</span></span>
+														</a>
+													</div></td>
+											</tr>
+											<tr>
+												<td><label style="text-align: center;">Application
+														Type <span
+														style="float: right; padding-top: 4px; padding-right: 5px;"
+														class="glyphicon glyphicon-search"
+														data-toggle="collapse" data-target="#filterAppTypeM"></span>
+														<div id="filterAppTypeM" class="collapse">
+															<input type="search"
+																class="text-input input--regular"
+																ng-model="appTypeFilterText"
+																style="font-weight: normal; background-color: #fff; padding-left: 4px;"
+																placeholder="Enter filter text" required="required"
+																maxlength="15" id="thirdpartyName">
+														</div>
+												</label>
+													<hr	style="margin: 0 0 4px 0; border-color: #b6c3b6; border-width: 2px;">
+													<ul style="padding-right: 7px; margin-bottom: 0px;">
+														<li
+															ng-repeat="appType in appTypeFilters |filter:appTypeFilterText |limitTo:appTypeFilterCount"
+															style="font-size: 12px; cursor: pointer;"><a
+															ng-click="refineSearch('ApplicationType',appType.filterchildCount);clickFilterBtn();">{{appType.filterchild}}
+																({{appType.filterchildCount}})</a> <a
+															class="glyphicon glyphicon-remove deleteIcon"
+															ng-hide="removeAppTypeFilter"
+															ng-click="removeFilter('ApplicationType',appType.filterchild);"></a>
+														</li>
+													</ul>
+													<div style="float: right; padding-right: 4px;"
+														ng-hide="hideAppTypeMore">
+														<a style="font-size: 10px;" href=""
+															ng-click="addMore();"> <span id="showMoreAppType"
+															class="glyphicon glyphicon-menu-down">
+																{{appTypeFilters.length-appTypeFilterCount>0 ?
+																appTypeFilters.length-appTypeFilterCount+"
+																more":"show less"}}</span>
+														</a>
+													</div></td>
+											</tr>
+											<tr>
+												<td><label style="text-align: center;">Tagger
+														Name <span
+														style="float: right; padding-top: 4px; padding-right: 5px;"
+														class="glyphicon glyphicon-search"
+														data-toggle="collapse" data-target="#filterTaggerM"></span>
+														<div id="filterTaggerM" class="collapse">
+															<input type="search"
+																class="text-input input--regular"
+																ng-model="taggerFilter"
+																style="font-weight: normal; background-color: #fff; padding-left: 4px;"
+																placeholder="Enter filter text" required="required"
+																maxlength="15" id="thirdpartyName">
+														</div>
+												</label>
+													<hr	style="margin: 0 0 4px 0; border-color: #b6c3b6; border-width: 2px;">
+													<ul style="padding-right: 7px; margin-bottom: 0px;">
+														<li
+															ng-repeat="tagger in taggerFilters |filter:taggerFilter |limitTo:taggerFilterCount"
+															style="font-size: 12px; cursor: pointer;"><a
+															ng-click="refineSearch('Tagger',tagger.filterchildCount);clickFilterBtn();">{{tagger.filterchild}}
+																({{tagger.filterchildCount}})</a> <a
+															class="glyphicon glyphicon-remove deleteIcon"
+															ng-hide="removeTaggerFilter"
+															ng-click="removeFilter('Tagger',tagger.filterchild);"></a>
+														</li>
+													</ul>
+													<div style="float: right; padding-right: 4px;"
+														ng-hide="hideTaggerMore">
+														<a style="font-size: 10px;" href=""
+															ng-click="addMore();"> <span id="showMoreTagger"
+															class="glyphicon glyphicon-menu-down">
+																{{taggerFilters.length-taggerFilterCount>0 ?
+																taggerFilters.length-taggerFilterCount+" more":"show
+																less"}}</span>
+														</a>
+													</div></td>
+											</tr>
+											<tr>
+												<td><label style="text-align: center;">Export
+														Status <span
+														style="float: right; padding-top: 4px; padding-right: 5px;"
+														class="glyphicon glyphicon-search"
+														data-toggle="collapse" data-target="#filterExpStatusM"></span>
+														<div id="filterExpStatusM" class="collapse">
+															<input type="search"
+																class="text-input input--regular"
+																ng-model="expStatusFilterText"
+																style="font-weight: normal; background-color: #fff; padding-left: 4px;"
+																placeholder="Enter filter text" required="required"
+																maxlength="15" id="thirdpartyName">
+														</div>
+												</label>
+													<hr	style="margin: 0 0 4px 0; border-color: #b6c3b6; border-width: 2px;">
+													<ul style="padding-right: 7px; margin-bottom: 0px;">
+														<li
+															ng-repeat="expStatus in expStatusFilters |filter:expStatusFilterText |limitTo:expStatusFilterCount"
+															style="font-size: 12px; cursor: pointer;"><a
+															ng-click="refineSearch('ExportStatus',expStatus.filterchildCount);clickFilterBtn();">{{expStatus.filterchild}}
+																({{expStatus.filterchildCount}})</a> <a
+															class="glyphicon glyphicon-remove deleteIcon"
+															ng-hide="removeExpStatusFilter"
+															ng-click="removeFilter('ExportStatus',expStatus.filterchild);"></a>
+														</li>
+													</ul>
+													<div style="float: right; padding-right: 4px;"
+														ng-hide="hideExpStatusMore">
+														<a style="font-size: 10px;" href=""
+															ng-click="addMore();"> <span
+															id="showMoreExpStatus"
+															class="glyphicon glyphicon-menu-down">
+																{{expStatusFilters.length-expStatusFilterCount>0 ?
+																expStatusFilters.length-expStatusFilterCount+"
+																more":"show less"}}</span>
+														</a>
+													</div></td>
+											</tr>
+											<tr>
+												<td><label style="text-align: center;">ECCN
+														<span
+														style="float: right; padding-top: 4px; padding-right: 5px;"
+														class="glyphicon glyphicon-search"
+														data-toggle="collapse" data-target="#filterEccnM"></span>
+														<div id="filterEccnM" class="collapse">
+															<input type="search"
+																class="text-input input--regular"
+																ng-model="eccnFilterText"
+																style="font-weight: normal; background-color: #fff; padding-left: 4px;"
+																placeholder="Enter filter text" required="required"
+																maxlength="15" id="thirdpartyName">
+														</div>
+												</label>
+													<hr style="margin: 0 0 4px 0; border-color: #b6c3b6; border-width: 2px;">
+													<ul style="padding-right: 7px; margin-bottom: 0px;">
+														<li
+															ng-repeat="eccn in eccnFilters |filter:eccnFilterText |limitTo:eccnFilterCount"
+															style="font-size: 12px; cursor: pointer;"><a
+															ng-click="refineSearch('ECCN',eccn.filterchildCount);clickFilterBtn();">{{eccn.filterchild}}
+																({{eccn.filterchildCount}})</a> <a
+															class="glyphicon glyphicon-remove deleteIcon"
+															ng-hide="removeEccnFilter"
+															ng-click="removeFilter('ECCN',eccn.filterchild);"></a>
+														</li>
+													</ul>
+													<div style="float: right; padding-right: 4px;"
+														ng-hide="hideEccnMore">
+														<a style="font-size: 10px;" href=""
+															ng-click="addMore();"> <span id="showMoreEccn"
+															class="glyphicon glyphicon-menu-down">
+																{{eccnFilters.length-eccnFilterCount>0 ?
+																eccnFilters.length-eccnFilterCount+" more":"show
+																less"}}</span>
+														</a>
+													</div></td>
+											</tr>
+											<tr>
+												<td><label style="text-align: center;">Date
+														Range <span id="dateRangeIcon"
+														style="float: right; padding-top: 4px; padding-right: 5px;"
+														class="glyphicon glyphicon-search"
+														data-toggle="collapse" data-target="#filterDateRangeM"></span>
+												</label>
+													<div id="filterDateRangeM" class="collapse">
+														<div class="input-group"
+															moment-picker="datepickerStart" format="YYYY-MM-DD">
+															<input class="form-control" style="max-width: 20em;"
+																placeholder="Select start date" readonly="readonly"
+																ng-model="datepickerStart"
+																ng-model-options="{ updateOn: 'blur' }"> <span
+																class="input-group-addon"> <i
+																class="glyphicon glyphicon-calendar"></i></span>
+														</div>
+														<label
+															style="font-weight: bold; color: #7c7c84; text-align: center; width: 100%;">to</label>
+														<div class="input-group" moment-picker="datepickerEnd"
+															format="YYYY-MM-DD">
+															<input class="form-control" style="max-width: 20em;"
+																placeholder="Select end date" readonly="readonly"
+																ng-model="datepickerEnd"
+																ng-model-options="{ updateOn: 'blur' }"> <span
+																class="input-group-addon"> <i
+																class="glyphicon glyphicon-calendar"></i></span>
+														</div>
+														<div ng-hide="hideRangeError">
+															<ul style="padding-left: 1.5em; margin: 0;">
+																<li ng-repeat="msg in rangeErrorMsg"><label
+																	class="validation-error"
+																	style="font-weight: normal; width: 100%;">
+																		<i>{{msg}}</i>
+																</label></li>
+															</ul>
+														</div>
+														<input type="submit" class="btn1 btn--primary"
+															value="Search within range" ng-click="rangeFilter()"
+															style="margin-bottom: 5px; width: 100%;">
+													</div>
+													<hr	style="margin: 0 0 4px 0; border-color: #b6c3b6; border-width: 2px;">
+													<ul style="padding-right: 7px; margin-bottom: 0px;">
+														<li
+															ng-repeat="date in dateRangeFilters |filter:dateRangeFilter |limitTo:dateRangeFilterCount"
+															style="font-size: 12px; cursor: pointer;"><a
+															ng-click="refineSearch('LastUpdated',date.filterchildCount);clickFilterBtn();">{{date.filterchild}}</a>
+															<a class="glyphicon glyphicon-remove deleteIcon"
+															ng-hide="removeDateFilter"
+															ng-click="removeFilter('LastUpdated',date.filterchild);"></a>
+														</li>
+													</ul></td>
+											</tr>
+											<tr>
+												<td><label style="text-align: center;">Country
+														<span
+														style="float: right; padding-top: 4px; padding-right: 5px;"
+														class="glyphicon glyphicon-search"
+														data-toggle="collapse" data-target="#filterCountryM"></span>
+														<div id="filterCountryM" class="collapse">
+															<input type="search"
+																class="text-input input--regular"
+																ng-model="countryFilter"
+																style="font-weight: normal; background-color: #fff; padding-left: 4px;"
+																placeholder="Enter filter text" required="required"
+																maxlength="15" id="thirdpartyName">
+														</div>
+												</label>
+													<hr	style="margin: 0 0 4px 0; border-color: #b6c3b6; border-width: 2px;">
+													<ul style="padding-right: 7px; margin-bottom: 0px;">
+														<li
+															ng-repeat="country in countryFilters |filter:countryFilter |limitTo:countryFilterCount"
+															style="font-size: 12px; cursor: pointer;"><a
+															ng-click="refineSearch('Country',country.filterchildCount);clickFilterBtn();">{{country.filterchild}}
+																({{country.filterchildCount}})</a> <a
+															class="glyphicon glyphicon-remove deleteIcon"
+															ng-hide="removeCountryFilter"
+															ng-click="removeFilter('Country',country.filterchild);"></a>
+														</li>
+													</ul>
+													<div style="float: right; padding-right: 4px;"
+														ng-hide="hideCountryMore">
+														<a style="font-size: 10px;" href=""
+															ng-click="addMore();"> <span id="showMoreCountry"
+															class="glyphicon glyphicon-menu-down">
+																{{countryFilters.length-countryFilterCount>0 ?
+																countryFilters.length-countryFilterCount+"
+																more":"show less"}}</span>
+														</a>
+													</div></td>
+											</tr>
+										</table>
+			
+			
+									</div>
+								</div>
+							</div>
+<!-- Search Filter Ended -->							
+							</div>
+						</div>
+					</div>
+					<px-modal btn-modal-negative="Close">
+					<button data-toggle="tooltip" style="background-color: #fff;" type="button" class="btn modal-trigger" >
+						<span class="fa fa-history" style="background-color: #fff;color: #3670ea;"></span>
+						<px-tooltip smartOrientation tooltip-message="Open search history panel"></px-tooltip>
+					</button>
+					<div class="panel-heading" style="background-color: #306538;;color: #fff;">
+							<i style="padding-right: 10px;" class="fa fa-history"
+								aria-hidden="true"></i>Search History
+					</div>
+					<ul
+						style="color: #868787; margin: 0; padding-top: 0.5em; columns: 2; column-gap: 2em; border-style: solid; border-width: 1px; border-color: #868787;">
+						<li ng-repeat="history in searchHistory"
+							style="font-size: 14px; cursor: pointer; padding-bottom: 5px;">
+							<a ng-click="search(history.name);" style="color: #777;font-weight: bold;"
+								onclick="closeModalPanel();">{{history.name}}</a>
+						</li>
+					</ul>
+					</px-modal>
+				</div>
+			</td>
+			
+     		<td style="padding:0;width: 70%;">
+     			<label class="label--inline" style="font-size: 1.3em; font-weight: normal;height: 30px; padding: 5px;  background-color: #3670ea; color: #fff;">Search Results</label>
+     			
+    			<a class="btn btn-link" href="#" id="expExcel"  ng-click="export_table_to_excel('expExcelTable')"
+    			   style="margin-left: 0;background-color: #203e25;margin-top: 1px;margin-right: 1px;float: right;"><span class="glyphicon glyphicon-share"></span>
+    			   <span id="expExcelBtnText">&nbsp;Export to Excel</span>
+    			   <px-tooltip smartOrientation tooltip-message="Export to Excel"></px-tooltip>
+    			</a>
+    			<a class="btn btn-link" href="#" id="expExcelAdmin"  ng-click="export_table_to_excel('expExcelTableAdmin')"
+    			   style="margin-left: 0;background-color: #203e25;margin-top: 1px;margin-right: 1px;float: right;"><span class="glyphicon glyphicon-share"></span>
+    			   <span id="expExcelBtnTextAdmin">&nbsp;Export to Excel - for bulk excel re-classification (Admin)</span>
+    			   <px-tooltip smartOrientation tooltip-message="Export to Excel - for bulk excel re-classification (Admin)"></px-tooltip>
+    			</a>
+			</td>
+		</tr>
+     </table>		
+		<div>
+			<ul style="list-style-type: none;padding-left: 1em;">
+				<li  ng-repeat="res in items">
+					<div class="form-inline" style="padding:5px 0 5px 0;">
+						<label class="label--inline" style="padding: 5px;background-color: #ce2b34;border-radius: 3px;margin-right: 1em;color:#fff;font-size: 9px;">
+							{{res.applicationType}}
+							<px-tooltip smartOrientation tooltip-message="Application Type"></px-tooltip>
+						</label>	
+						<a style="cursor:pointer;font-weight:bold;text-decoration: underline;vertical-align: bottom;">{{res.objectId}}
+							<px-tooltip smartOrientation tooltip-message="Object Id"></px-tooltip>
+						</a>
+					</div>
+					<div class="form-inline">
+						<div class="label--inline" style="padding: 5px;border-width:1px;border-color: #2b5ea2;">
+							<label style="display: inline-block;font-size: 12px;">{{res.country}}&nbsp;|
+								<px-tooltip smartOrientation tooltip-message="Country"></px-tooltip>
+							</label>
+							<label style="display: inline-block;font-size: 12px;">&nbsp;{{res.exportStatus}}&nbsp;|
+								<px-tooltip smartOrientation tooltip-message="Export Status"></px-tooltip>
+							</label>
+							<label style="display: inline-block;font-size: 12px;">&nbsp;{{res.eccn}}&nbsp;|
+								<px-tooltip smartOrientation tooltip-message="ECCN"></px-tooltip>
+							</label>
+							<label style="display: inline-block;font-size: 12px;">&nbsp;{{res.tagger}}&nbsp;|
+								<px-tooltip smartOrientation tooltip-message="Tagger"></px-tooltip>
+							</label>
+							<label style="display: inline-block;font-size: 12px;">&nbsp;{{res.lastUpdated}}&nbsp;|
+								<px-tooltip smartOrientation tooltip-message="Last Updated"></px-tooltip>
+							</label>
+							<label style="display: inline-block;font-size: 12px;">&nbsp;{{res.rationale}}
+								<px-tooltip smartOrientation tooltip-message="Rationale"></px-tooltip>
+							</label>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div id="paginationDiv" style="text-align:center;">
+				<!-- pager -->
+        			<ul ng-if="pager.pages.length" class="pagination">
+            		<li ng-class="{disabled:pager.currentPage === 1}">
+	        	        <a ng-click="setPage(1)">First</a>
+        	    	</li>
+    	        	<li ng-class="{disabled:pager.currentPage === 1}">
+	                	<a ng-click="setPage(pager.currentPage - 1)">Previous</a>
+            		</li>
+            		<li ng-repeat="page in pager.pages" ng-class="{active:pager.currentPage === page}">
+	    	            <a ng-click="setPage(page)">{{page}}</a>
+    	        	</li>                
+	            	<li ng-class="{disabled:pager.currentPage === pager.totalPages}">
+	                	<a ng-click="setPage(pager.currentPage + 1)">Next</a>
+            		</li>
+            		<li ng-class="{disabled:pager.currentPage === pager.totalPages}">
+	                	<a ng-click="setPage(pager.totalPages)">Last</a>
+            		</li>
+        		</ul>
+			</div>
+			</div>
+		</div>
+	</div>
+	<div id="searchResultsTable" class="panel panel-primary col-lg-12 col-sm-12 col-md-12" 
+		style="padding-right: 0px;padding-left: 0px;">
+	<px-data-table id="objDataTable"  striped  table-data="{{searchResults}}"
+		enable-column-resizing enable-column-reorder show-column-choose>
+       <px-data-table-column filterable max-column-character-width="25" sortable  name="objectId" label="Object Id" > </px-data-table-column>
+       <px-data-table-column filterable max-column-character-width="35" sortable  name="applicationType" label="Application Type" > </px-data-table-column>
+       <px-data-table-column filterable max-column-character-width="50" sortable  name="rationale" label="Rationale" > </px-data-table-column>
+       <px-data-table-column filterable max-column-character-width="7" sortable  name="eccn" label="ECCN" > </px-data-table-column>
+       <px-data-table-column filterable max-column-character-width="9" sortable  name="tagger" label="Tagger" > </px-data-table-column>
+       <px-data-table-column filterable max-column-character-width="10" sortable  name="lastUpdated" label="Last Updated" > </px-data-table-column>
+       <px-data-table-column filterable max-column-character-width="10" sortable  name="exportStatus" label="Export Status" > </px-data-table-column>
+       <px-data-table-column filterable max-column-character-width="15" sortable  name="country" label="Country" > </px-data-table-column>
+     	<label class="label--inline" style="font-size: 1.3em; font-weight: normal; width: 100%; height: 30px; padding-top: 5px; padding-left: 14px; background-color: #3670ea; color: #fff;">Search Results</label>
+     </px-data-table>
+	</div>
+</div>
+<div>
+
+	<table id="expExcelTable" style="display:none;">
+		<tr style="background-color: #b3e2b3;font-weight: bold;">
+			<td>Application ID</td>
+			<td>Application Type</td>
+			<td>Application Object Id</td>
+			<td>Object Description</td>
+			<td>Rationale</td>
+			<td>ECCN</td>
+			<td>Tagger</td>
+			<td>Last Updated</td>
+			<td>Export Status</td>
+			<td>GEQMS Format</td>
+			<td>411 Guidance Document</td>
+			<td>411 Group</td>
+			<td>411 Type</td>
+			<td>Short Description</td>
+			<td>Long Description</td>
+			<td>Country Name</td>
+		</tr>
+		<tr ng-repeat="res in searchResults">
+			<td>{{res.applicationId}}</td>
+			<td>{{res.applicationType}}</td>
+			<td>{{res.objectId}}</td>
+			<td>{{res.objectDescription}}</td>
+			<td>{{res.rationale}}</td>
+			<td>{{res.eccn}}</td>
+			<td>{{res.tagger}}</td>
+			<td>{{res.lastUpdated}}</td>
+			<td>{{res.exportStatus}}</td>
+			<td>{{res.geqmsFormat}}</td>
+			<td>{{res.guidanceDocument411}}</td>
+			<td>{{res.group411}}</td>
+			<td>{{res.type411}}</td>
+			<td>{{res.shortDescription}}</td>
+			<td>{{res.longDescription}}</td>
+			<td>{{res.country}}</td>
+		</tr>
+	</table>
+	<table id="expExcelTableAdmin" style="display:none;">
+		<tr style="background-color: #b3e2b3;font-weight: bold;">
+			<td>Application ID (use dropdown)</td>
+			<td>Application Type (use dropdown)</td>
+			<td>Object ID</td>
+			<td>Object Description</td>
+			<td>Country Name (use dropdown)</td>
+			<td>Export Status  (Export Authorization) - use dropdown</td>
+			<td>Assigned ECN(Classification List Delimitted By ~ ( eg. 9E991~9E001)if multiple ECNs)</td>
+			<td>Rationale</td>
+			<td>Other ECNs Considered (Optional)</td>
+			<td>Tagger</td>
+			<td>Is Tag Supplied by a 3rd Party? (use dropdown)</td>
+			<td>3rd party Name</td>
+			<td>3rd Party Company Contact Info</td>
+			<td>Did Gov Supply Classification? (use dropdown)</td>
+			<td>Gov Case Number</td>
+			<td>Date ECN was Assigned(MM/DD/YYYY)</td>
+			<td>Uploaded To MDPA By (SSO)</td>
+			<td>Object Tag Date (MM/DD/YYYY)</td>
+		</tr>
+		<tr ng-repeat="res in searchResults">
+			<td>{{res.applicationId}}</td>
+			<td>{{res.applicationType}}</td>
+			<td>{{res.objectId}}</td>
+			<td>{{res.objectDescription}}</td>
+			<td>{{res.country}}</td>
+			<td>{{res.exportStatus}}</td>
+			<td>{{res.eccn}}</td>
+			<td>{{res.rationale}}</td>
+			<td>{{res.geqmsFormat}}</td>
+			<td>{{res.tagger}}</td>
+			<td>{{res.isThirdPartySupplied}}</td>
+			<td>{{res.thirdPartyName}}</td>
+			<td>{{res.thirdPartyContactInfo}}</td>
+			<td>{{res.govtSupplied}}</td>
+			<td>{{res.govCaseNumber}}</td>
+			<td>{{res.approvedDate}}</td>
+			<td>{{res.lastUpdatedBy}}</td>
+			<td>{{res.lastUpdated}}</td>
+		</tr>
+	</table>
+</div>
+</div>
+
+
+
+
+</px-card>
+<script>
+if(screen.width<768){
+	document.getElementById('searchResultsList').style.display='block';
+	document.getElementById('searchResultsTable').style.display='none';
+}
+closeModalPanel = function(){
+	console.log("closeModalPanel called-----");
+	document.getElementById('Close').click();
+}
+
+</script>

@@ -1,0 +1,16 @@
+{
+	"results": {
+		"userId": "501313018",
+		"userEmail": "abhinav.saxena3@ge.com",
+		"userFirstName": "Abhinav Swaroop",
+		"userLastName": "Saxena",
+		"userFullName": "Abhinav Swaroop Saxena",
+		"userRoles": ["TCT_STW_User", "TCT_TAGADMIN", "TCT_USER"],
+		"userType": "Admin",
+		"isAdmin": true,
+		"isTagger": false,
+		"isUser": false
+	},
+	"code" : "1",
+	"msg" : "success"
+}

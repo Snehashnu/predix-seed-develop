@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Predix Seed Application</title>
+    <base href="/">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+	<link rel="import" href="bower_components/px-card/px-card.html"/>
+    <script type='application/javascript' src='bower_components/px/dist/px.min.js'></script>
+    
+	<script src="scripts/filesaver.js"></script>
+	<script lang="javascript" src="\scripts\modules\mdpa-module\shim.js"></script>
+	<script lang="javascript" src="\scripts\modules\mdpa-module\xlsx.core.min.js"></script>
+	<!-- <script src="\scripts\modules\mdpa-module\exceljs\excel.js"></script> -->
+	
+    <!-- Just needed for IE -->
+    <script src="bower_components/es6-promise/es6-promise.min.js"></script>
+
+    <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    
+    <script src="bower_components\jquery\dist\jquery.min.js"></script>
+    <script src="bootstrap\js\bootstrap.min.js"></script>
+    	
+   	<script src="bower_components/angular-moment-picker-master/dist/angular-moment-picker.js"></script>
+   	<link href="bower_components/angular-moment-picker-master/dist/angular-moment-picker.css" rel="stylesheet">
+   	<script src="/bower_components/angucomplete-alt-master/angucomplete-alt.js"></script>
+   	<link href="/bower_components/angucomplete-alt-master/angucomplete-alt.css" rel="stylesheet">
+   	<link rel="import" href="/bower_components/px-modal-master/px-modal.html"/>
+   	
+ 	<link rel="stylesheet" href="bootstrap\css\bootstrap.min.css">
+ 	
+ 	<link rel="import" href="bower_components/px-tabs/px-tab-set.html"/>
+    <link rel="import" href="polymer-loader.vulcanized.html">
+    <link rel="import" href="bower_components/px-tooltip/px-tooltip.html"/>
+    <link rel="import" href="bower_components/px-spinner/px-spinner.html"/>
+    <link rel="stylesheet" href="custom.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body unresolved class="app" data-ng-controller="MainCtrl">
+
+
+
+
+
+	<div class="wrapper" id="wrapper">
+
+		
+		
+		
+		<!-- Right Navigation for small devices -->
+		<div id="sidebar-wrapper" class="visible-xs">
+
+
+			<div class="">
+
+
+				<ul class="nav navbar-nav">
+					<li class="dropdown listBorder"><a id="admin" href="#"
+						class="dropdown-toggle selectedAdmin menuColor"
+						data-toggle="dropdown"> <i class="fa fa-users iconClass"></i>
+							<span class="menuItem">Administrator</span><i
+							class="glyphicon glyphicon-triangle-bottom"
+							style="margin-left: 20px"></i>
+					</a>
+
+						<ul class="dropdown-menu">
+						
+							<li class="submenuLink" ><a href="assignRole " class="" ><span
+									class="submenuItem">Assign Role to User</span></a></li>
+							<li class="submenuLink"><a href="createGroup"><span
+									class=submenuItem>Create Group</span></a></li>
+							<li class="submenuLink"><a href="bulkUpload"><span
+									class=submenuItem>Bulk Upload</span></a></li>
+							<li class="submenuLink"><a href="updateRegulation"><span
+									class=submenuItem>Update Regulation</span></a></li>
+							<li class="submenuLink"><a href="tagFeature"><span
+									class=submenuItem>411 Tag Feature</span></a></li>
+						</ul></li>
+
+					<li class="dropdown listBorder"><a id="general" href="#"
+						class="dropdown-toggle selectedGeneral menuColor"
+						data-toggle="dropdown"> <i
+							class="fa fa-pencil-square iconClass"></i> <span class="menuItem">General</span><i
+							class="glyphicon glyphicon-triangle-bottom"
+							style="margin-left: 56px"></i>
+					</a>
+
+						<ul class="dropdown-menu">
+							<li class="submenuLink"><a href="createObject"><span
+									class="submenuItem">Create Object</span></a></li>
+							<li class="submenuLink"><a href="advanceSearch"><span
+									class=submenuItem>Advance Search</span></a></li>
+
+						</ul></li>
+
+
+
+
+
+					<li class="listBorder"><a id="user" href="#" class="menuColor"><i
+							class="fa fa-user iconClass "></i><span class="menuItem">Username</span></a></li>
+
+
+					<li class="dropdown listBorder"><a id="help" href="#"
+						class="dropdown-toggle selectedHelp menuColor"
+						data-toggle="dropdown"> <i class="fa fa-question iconClass "></i>
+							<span class="menuItem">MDPA Help</span> <i
+							class="glyphicon glyphicon-triangle-bottom"
+							style="margin-left: 48px"></i>
+					</a>
+
+						<ul class="dropdown-menu">
+							<li class="submenuLink"><a href="#"><span class="submenuItem">Some
+										Element</span></a></li>
+							<li class="submenuLink"><a href="#"><span class=submenuItem>Some
+										Link</span></a></li>
+
+						</ul></li>
+
+				</ul>
+			</div>
+		</div>
+
+	</div>
+
+
+	
+
+	<div id="page-content-wrapper">
+	
+	<!-- Header for large screen devices upto Ipads  -->
+		<header role="banner" class="visible-lg visible-md visible-sm">
+
+			<div class="viewport">
+
+				<img class="imgcls" src="/images/techM2.png" style="width: 7em;">
+				<div class="float--left"
+					style="position: relative; color: #777; text-align: center; left: 142px;">
+					<div id="" class=" ">
+						<span style="font-size: 20px;">Machine Data Predictive Analysis</span> <br /> <span
+							style="font-size: 11px;">Powered by TechM</span>
+					</div>
+				</div>
+
+
+				<ul class="nav navbar-nav navbar-right">
+					<li id="list-menu"><a id="homenav" href="/"
+						class="btn btn-default "><i id="iconNav"
+							class="fa fa-home fa-lg"></i></a>
+					</li>
+					<li id="list-menu">
+						<div class="right-inner-addon  visible-md visible-lg">
+							<i id="iconNav" class="fa fa-search" style="padding-top: 7px;"></i> <input type="search"
+								class="form-control" placeholder="Search" style="height: 28px" />
+						</div>
+					</li>
+					<li id="list-menu">
+
+
+						<div id="dropnav" class="dropdown ">
+							<button class="btn btn-default dropdown-toggle navbar-btn"
+								type="button" id="dropdownMenu1" data-toggle="dropdown"
+								aria-haspopup="true" aria-expanded="true" style="color: black;">
+								<span class="glyphicon glyphicon-user"></span> Username <span
+									class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+
+							</ul>
+						</div>
+					</li>
+
+					
+					
+					
+					
+				
+				</ul>
+			</div>
+		</header>
+
+
+
+
+
+
+
+		<!-- Header for mobile devices small screen navbar-fixed-top -->
+		<header class="visible-xs " role="banner">
+
+			<div class="viewport">
+				<nav class="navbar navbar-default navbar-fixed-top"
+					role="navigation"
+					style="background-color: #eee; border-style: hidden;">
+					<div class="container-fluid">
+						<div class="navbar-header">
+<a href="#menu-toggle"
+									class=" visible-xs " id="menu-toggle"
+									style="margin-top: 25px;margin-bottom:-18px; background-color: transparent; border: none; margin-left:12px"><i
+										style="color: black;" class="fa fa-bars fa-lg"
+										aria-hidden="true"></i></a>
+							<img class="imgcls" src="/images/techM2.png"
+								style="margin-top: -11px; margin-left: 30px;width:6em;">
+							<div class="float--left"
+								style="position: relative; color: #777; text-align: center; left: 152px; margin-top: -11px;">
+								<div id="" class=" ">
+									<span style="font-size: 24px;">MDPA</span> <br /> 
+									
+								</div>
+							</div>
+
+
+							<ul class="nav navbar-nav navbar-right">
+
+								
+
+
+								<li><a href="#" class="navbar-toggle visible-xs " id=""
+									style="margin-top: -20px; margin-right: 20px; background-color: transparent; border: none;"><i
+										style="color: black;" class="fa fa-user fa-lg"
+										aria-hidden="true"></i></a></li>
+
+								<li id=""><a id="homenav" href="/" class="navbar-toggle "
+									style="margin-top: -20px; margin-right: 0px; background-color: transparent; border: none;"><i
+										id="iconNav" class="fa fa-home fa-lg"></i></a></li>
+							</ul>
+
+						</div>
+					</div>
+
+
+				</nav>
+			</div>
+
+		</header>
+
+
+
+		<!-- Main Content -->
+
+		<div class="viewport"  style="margin-right: 0.1rem; margin-left: 0.1rem;">
+			<div id="test" class="content-wrapper">
+
+				<!-- Navigation left for large devices -->
+				<px-app-nav class="navbar visible-lg visible-md visible-sm"
+					nav-items="{{App.tabs}}" path-prefix="/" path-key="state">
+				</px-app-nav>
+
+				<!-- Section for App Pages -->
+				<main  class="u-pt-- u-pr-- u-pl-- alignLeft" role="main" >
+					<div id="mainSec" class="right-inner-addon visible-sm visible-xs"
+						style="margin-bottom: 20px;padding-top: 5px;">
+						<i id="iconNav" class="fa fa-search" style="padding-top: 7px;"></i> <input type="search"
+							class="form-control" placeholder="Search" style="height: 28px" />
+					</div>
+					<section role="region" ui-view></section>
+				</main>
+			</div>
+		</div>
+	</div>
+
+	<!-- pagewrapper -->
+
+	<!-- Footer -->
+	<footer class="flex flex--middle" role="contentinfo">
+		<div class="viewport">
+			<nav class="flex flex--right flex--middle" role="navigation">
+				<ul class="list-inline">
+					<li class="u-mh-"><a href="http://www.ge.com/privacy"
+						target="_blank">Privacy</a></li>
+					<li class="u-mh-"><a href="http://www.ge.com/terms"
+						target="_blank">Terms</a></li>
+				</ul>
+				<small class="u-ml+">©2015 General Electric</small>
+			</nav>
+		</div>
+	</footer>
+	<google-analytics code="UA-72329845-1"></google-analytics>
+
+</body>
+<script>
+	// IE11 workaround: We can't rely on IE's load order for scripts that are loaded outside of require.js (might
+	//  be an issue with the web components polyfill), so we wait for the HTMLImportsLoaded event to ensure our
+	//  web components' scripts have loaded.
+	window.addEventListener('HTMLImportsLoaded', function(e) {
+		var elScript = document.createElement('script');
+		elScript.setAttribute('src', 'bower_components/requirejs/require.js');
+		elScript.setAttribute('data-main', 'scripts/bootstrapper.js');
+		document.getElementsByTagName('body')[0].appendChild(elScript);
+	});
+
+	$("#menu-toggle ").click(function(e) {
+		e.preventDefault();
+		$("#wrapper").toggleClass("toggled");
+	});
+	
+	/* $(document).ready(function(){
+	      var date_input=$('input[name="date"]'); //our date input has the name "date"
+	      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+	     var options={
+	       format: 'mm/dd/yyyy',
+	      container: container,
+	      todayHighlight: true,
+	      autoclose: true,
+	    };
+	    date_input.datepicker(options);
+	  }) */
+
+
+	
+</script>
+
+</html>

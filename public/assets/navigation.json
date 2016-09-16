@@ -1,0 +1,71 @@
+{
+	"results": [
+		{
+			"title" : "Administration",
+			"isParent" : true,
+			"navType" : "admin",
+			"nav" : [
+				{
+					"title" : "Application",
+					"url" : "javascript:void(0);",
+					"navType" : "admin"
+				},
+				{
+					"title" : "Group",
+					"url" : "javascript:void(0);",
+					"navType" : "admin"
+				},
+				{
+					"title" : "Tagger Country",
+					"url" : "javascript:void(0);",
+					"navType" : "admin"
+				},
+				{
+					"title" : "Export Classification",
+					"url" : "javascript:void(0);",
+					"navType" : "admin"
+				},
+				{
+					"title" : "411 Tag",
+					"url" : "#/tag",
+					"navType" : "admin"
+				},
+				{
+					"title" : "Update Regulations",
+					"url" : "javascript:void(0);",
+					"navType" : "admin"
+				},
+				{
+					"title" : "Role Setup",
+					"url" : "#/rolesetup",
+					"navType" : "admin"
+				}
+			]
+		},
+		{
+			"title" : "General",
+			"isParent" : true,
+			"navType" : "user",
+			"nav" : [
+				{
+					"title" : "Create Object Tag",
+					"url" : "javascript:void(0);",
+					"navType" : "user"
+				},
+				{
+					"title" : "Advance Search",
+					"url" : "javascript:void(0);",
+					"navType" : "user"
+				}
+			]
+		},
+		{
+			"title" : "MDPA Help",
+			"isParent" : false,
+			"navType" : "user",
+			"nav" : "javascript:void(0);"
+		}
+	],
+	"code" : "1",
+	"msg" : "success"
+}

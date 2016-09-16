@@ -1,0 +1,52 @@
+<style>
+.aha-table-0 .scroll-body.aha-table {
+   /*  display: block;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-bottom: 1rem;
+    padding-left: 1px;
+    padding-right: 1px; */
+   /*  background-color:lightblue; */
+    }
+    .aha-FieldName-td {
+    background-color:lightgray;
+    word-space:wrap;
+   
+    }
+    .aha-FieldName-th {
+     background-color:gray !important;
+    }
+   .table--columns.aha-table th.aha-table, .aha-table-0 .table--columns.aha-table .th.aha-table, .aha-table-0 .table--columns.aha-table td.aha-table, .aha-table-0 .table--columns.aha-table .td.aha-table {
+    border : 1px solid #b1b1bc;
+    }
+
+</style>
+
+  <px-card header-text="Avatar">
+      <content>  </content>
+      <table  cellpadding="5" width="100%" >   <tr>
+       <th>Select Role </th>
+      <td><select ng-model="selectedRole" ng-options ="role.label for role in roles" /></td>
+       <th>Select State </th>
+      <td> <select ng-model="selectedState" ng-options ="state.label for state in states" /> </td>
+    <td style="padding-left:10em;float:right">  <i class="fa-user fa style-scope px-app-nav"></i><button type="button" class="btn" ng-click="getAvatar();">Avatar</button>   </td>  
+   </tr>   </table>  
+				  
+  
+   
+  
+    
+  
+  
+    <h1>dropdown with </h1>
+   
+<px-dropdown display-value="Text" >
+   <px-dropdown-content class="px-dropdown-content" extend-dropdown="true" menu-open="false" extend-dropdown-by="40" 
+  items="{{dropDown}}">
+  </px-dropdown-content>
+</px-dropdown>
+
+
+
+  </px-card>
+

@@ -1,0 +1,67 @@
+<style>
+.aha-table-0 .scroll-body.aha-table {
+   /*  display: block;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-bottom: 1rem;
+    padding-left: 1px;
+    padding-right: 1px; */
+   /*  background-color:lightblue; */
+    }
+    .aha-FieldName-td {
+    background-color:lightgray;
+    word-space:wrap;
+   
+    }
+    .aha-FieldName-th {
+     background-color:gray !important;
+    }
+   .table--columns.aha-table th.aha-table, .aha-table-0 .table--columns.aha-table .th.aha-table, .aha-table-0 .table--columns.aha-table td.aha-table, .aha-table-0 .table--columns.aha-table .td.aha-table {
+    border : 1px solid #b1b1bc;
+    }
+
+</style>
+
+  <px-card header-text="Design Review - Fields Matrix">
+      <content>  </content>
+      <table  cellpadding="5" width="100%" >   <tr> <th>Select Role </th>
+    <td><select  ng-model="selectedRole" ng-options ="role.label for role in roles" ng-change="getFieldsMatrix()"/></td>
+    <td style="padding-left:10em"> <button type="button" class="btn" ng-click="saveMatrix();">Save Matrix</button></td>
+    <td style="padding-left:20em;float:right">  <i class="fa-user fa style-scope px-app-nav"></i><button type="button" class="btn" >Avatar</button> </td>  
+   </tr>   </table>  
+				  
+  <px-data-table id="myDataTable" selected-rows="{{mySelectedItems}}" selectable id="mytable"   striped   table-data="{{pendingreviewsdata}}"  hide-pagination-control  enable-column-resizing>
+<px-data-table-column     name="FieldName" label="Field Name"    editable=true > 
+  
+ </px-data-table-column>
+<px-data-table-column     name="DraftBegun" type="boolean" label="Draft"  >  </px-data-table-column>
+<px-data-table-column     name="MeetingProposed" type="boolean" label="Meeting Proposed">   </px-data-table-column>
+ <px-data-table-column     name="Meeting/ScopeApproved" type="boolean" label="Meeting Scope Approved">   </px-data-table-column>
+ <px-data-table-column     name="MeetingCompleted" type="boolean" label="Meeting Completed">   </px-data-table-column>
+ <px-data-table-column     name="AllAI/ChitsClosed" type="boolean" label="All AI/Chits Closed">   </px-data-table-column>
+ <px-data-table-column     name="AI/ChitIssued" type="boolean" label="AI / ChitIssued">   </px-data-table-column>
+ <px-data-table-column     name="SubmittedForClosure" type="boolean" label="Submitted For Closure">   </px-data-table-column>
+ <px-data-table-column     name="Closed" type="boolean" label="Closed">   </px-data-table-column>
+ <px-data-table-column     name="DesignManagerApproval" type="boolean" label="Design Manager Approval">   </px-data-table-column>
+ <px-data-table-column     name="TagPending" type="boolean" label="Tag Pending">   </px-data-table-column>
+   </px-data-table>
+   
+  
+  
+ <script>
+//alert('hi');
+document.getElementById("myDataTable").addEventListener("px-select-all-click", function(e) {
+	  var allSelectedRows = e.detail;
+	  console.log("Select/unselect all", allSelectedRows); 
+	  alert('clicked')
+	});
+
+document.getElementById("myDataTable").addEventListener("px-row-click", function(e) {
+		  var clickedRow = e.detail.row;
+		  delete e.detail.row.row["dataIndex"];
+		  console.log(angular.toJson(clickedRow));
+	   // console.log("Row clicked", angular.fromJson(clickedRow), " _selected: ", clickedRow._selected);
+	});
+</script> 
+   </px-card>
+

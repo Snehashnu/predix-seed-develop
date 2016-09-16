@@ -1,0 +1,24 @@
+{
+	"lstCountry": 
+	[
+		{
+			"name": "Singapore",
+			"code": "SG"
+		},
+
+		{
+			"name": "United Stated",
+			"code": "US"
+		},
+
+		{
+			"name": "India",
+			"code": "IND"
+		},
+
+		{
+			"name": "Australia",
+			"code": "AUS"
+		}
+	]
+}

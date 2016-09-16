@@ -1,0 +1,89 @@
+{
+	"results": [
+	    {
+	    	"name" : "--Select--",
+	    	"key" : "0"
+		
+	    },
+	            
+		{
+			"name" : "Australia",
+			"code" : "AUS",
+			"ISO" : "XYZ",
+			"key" : "1",
+			"jurisdiction" : [
+				{
+					"jName" : "Commerce or Dual",
+					"jCode" : "XYZ_J"
+				},
+				{
+					"jName" : "DoE/NRC",
+					"jCode" : "XYZ_J"
+				},
+				{
+					"jName" : "State",
+					"jCode" : "XYZ_J"
+				},
+				{
+					"jName" : "Add New",
+					"jCode" : "new"
+				}
+			]
+		},
+		{
+			"name" : "India",
+			"code" : "IND",
+			"ISO" : "XYZ",
+			"key" : "2",
+			"jurisdiction" : [
+				{
+					"jName" : "Commerce or Dual",
+					"jCode" : "XYZ_J"
+				},
+				{
+					"jName" : "DoE/NRC",
+					"jCode" : "XYZ_J"
+				},
+				{
+					"jName" : "State",
+					"jCode" : "XYZ_J"
+				},
+				{
+					"jName" : "Add New",
+					"jCode" : "new"
+				}
+			]
+		},
+		{
+			"name" : "United States",
+			"code" : "US",
+			"ISO" : "XYZ",
+			"key" : "3",
+			"jurisdiction" : [
+				{
+					"jName" : "Commerce or Dual",
+					"jCode" : "XYZ_J"
+				},
+				{
+					"jName" : "DoE/NRC",
+					"jCode" : "XYZ_J"
+				},
+				{
+					"jName" : "State",
+					"jCode" : "XYZ_J"
+				},
+				{
+					"jName" : "Add New",
+					"jCode" : "new"
+				}
+			]
+		},
+		{
+			"name": "New Country",
+			"key" : "new"
+		}
+		
+	],
+	"code" : "1",
+	"msg" : "success"
+}

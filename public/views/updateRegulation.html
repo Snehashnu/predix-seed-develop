@@ -1,0 +1,156 @@
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<style>
+.reset{
+background: transparent;
+    border: 0;
+    position: relative;
+    top: -27px;
+    right: 18px;
+    float: right;
+    display: none;
+    }
+.showX{
+background: transparent;
+    border: 0;
+    position: relative;
+    top: -27px;
+    right: 18px;
+    float: right;
+    display: block
+    }
+.testClass{
+position: relative;
+}    
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.form-inline .form-control {
+min-width: 330px;
+}
+</style>
+<px-card header-text="Update Regulation" >
+<div id="messageId" class="alert alert-success"  >
+{{message}}
+</div>
+
+<div>
+  <form class="form-inline" role="form">
+  <div class="dropdown" >
+  <label for="cName">Country List</label>
+    <a  class="{{countryClass}}" ng-model="selectedCtry" style="min-width: 330px"  data-toggle="dropdown" ng-click="styleDefault();" href="#">{{ selectedCtry }} <b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu" style="min-width: 330px"  aria-labelledby="dropdownCountry">
+      <li ng-repeat="country in countryList"  >
+        <span id="countryListDropdown" ng-click="countryChange(country)">{{country.val}}</span>
+      </li>
+    </ul>
+  </div>
+  <br/>
+  <div id="countryDetailsDiv" >
+    <div class="form-group" >
+      <label for="cName">Country Name</label>
+      <input type="text" class="form-control testClass"  id="cName" ng-model="countryData.name"  ng-readonly="countryDataDisable" placeholder="Enter Country Name">  
+      <button class="reset"   type="reset">X</button>
+    </div>
+    <div class="form-group" >
+      <label for="cCode">Country Code</label>
+      <input type="text" class="form-control testClass"  id="cCode" ng-model="countryData.code" maxlength="3" ng-readonly="countryDataDisable" placeholder="Enter Country Code">  
+      <button class="reset"  type="reset">X</button>
+    </div>
+    <div class="form-group" id="isoDiv">
+      <label for="cISO">ISO Code</label>
+      <input type="text" class="form-control testClass"  id="cISO" ng-model="countryData.iso" maxlength="3" ng-readonly="countryDataDisable" placeholder="Enter ISO Code">
+      <button class="reset"   type="reset">X</button>
+    </div></div>
+  </form>
+  <br/>
+   <form class="form-inline" role="form">
+  <div id="addCountryDiv" class="form-field form-inline">
+   <div  class="form-group">
+      <label >Do you want to submit Country or Add Jurisdiction</label>
+   </div>
+    &nbsp;&nbsp;&nbsp;
+    <div class="form-group">
+   	  <button type="submit" class="{{subCtryCls}}"   ng-click="addCountry()"  ng-disabled="addCtryDsbl">Submit</button> &nbsp;&nbsp;&nbsp;
+      <button type="submit" class="{{addJrdCls}}"   ng-click="addNewJurisdiction()"  ng-disabled="addJrdDsbl" >Add Jurisdiction</button>
+    </div>
+     <br/>
+     </div>
+     </form>
+     <form class="form-inline" role="form">
+      
+  <div id="jurisdictionDiv" class="dropdown">
+  <hr>
+  <div class="dropdown" >
+  <label for="cName">Jurisdiction List</label>
+    <a  class="{{jurisClass}}" ng-model="selectedJuris" ng-click="styleDefault();" style="min-width: 330px" data-toggle="dropdown" href="#">{{ selectedJuris }} <b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu" style="min-width: 330px"  aria-labelledby="dropdownJuris">
+      <li ng-repeat="jury in jurisdictionList"  >
+        <span id="jurisListDropdown" ng-click="jurisdictionChange(jury)">{{jury.name}}</span>
+      </li>
+    </ul>
+  </div>
+   
+  </div>
+  <br/>
+  <div id="jurisdictionDetailsDiv">
+    <div class="form-group" >
+      <label >Jurisdiction </label>
+      <input type="text" for="jurName" class="form-control testClass"  id="jurName" ng-readonly="jurisdictionDisable" ng-model="selectedJurisdiction.name"  placeholder="Enter Jurisdiction">
+      <button class="reset" ng-readonly="jurisdictionDisable" type="reset">X</button>
+    </div>
+    <div class="form-group"  >
+      <label > Class Type</label>
+      <input type="text" for="jurCode" class="form-control testClass"  id="jurCode" ng-readonly="jurisdictionDisable"  ng-model="selectedJurisdiction.class"  placeholder="Enter Class Type">
+      <button class="reset" ng-readonly="jurisdictionDisable" type="reset">X</button>
+    </div>
+    </div>
+  </form>
+  
+  
+ <br/>
+	<div id="jurisdictionDetailsDivUpload">
+		<form class="form-inline" role="form">
+			<div class="form-group">
+				<label for="email">Upload Class Codes</label>
+			</div><br>
+			<div class="form-group" style="min-width: 200px">
+				<a href="#" class="btn btn-info "  style="min-width: 285px" ng-click="downloadTemplate();">
+					<span style="float:left;padding-top: 7px;" class="glyphicon glyphicon-download"></span>
+					<span> &nbsp;Get latest Regulation Template</span>
+				</a>
+			</div>
+			
+			<div class="fileUpload btn btn-primary" style="min-width: 285px" id="chooseFileDiv">
+				<span style="float:left;padding-top: 7px;" class="glyphicon glyphicon-upload"></span> <span>Upload Updated Regulation Template</span> <input type="file" class="upload"
+					onchange="angular.element(this).scope().uploadedFile(this)" />
+			</div>
+			
+			&nbsp;
+			<div class="form-group" id="uploadBtnId" style="display: none;min-width: 285px;">
+				<label><button type="button" class="{{uploadCls}}" style="min-width: 285px;"
+						ng-click="saveFile()">Upload</button>&nbsp;</label>
+			</div>
+			
+			
+		</form>
+	</div>
+
+</div>
+<br/><br/><br/>
+<br/><br/><br/>
+</px-card>
