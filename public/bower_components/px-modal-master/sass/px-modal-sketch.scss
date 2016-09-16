@@ -1,0 +1,93 @@
+/*
+ * Copyright (c) 2014 GE Global Research. All rights reserved.
+ *
+ * The copyright to the computer software herein is the property of
+ * GE Global Research. The software may be used and/or copied only
+ * with the written permission of GE Global Research or in accordance
+ * with the terms and conditions stipulated in the agreement/contract
+ * under which the software has been supplied.
+ */
+
+//
+// Sass for the "sketch" notion of the px-modal component
+//
+// @author
+//
+
+/*
+THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PREDIX BRANDING
+Predix branding rules go in px-modal-predix.scss, not in this file.
+*/
+
+
+// Generic
+@import "px-normalize-design/_generic.normalize.scss";
+@import "px-box-sizing-design/_generic.box-sizing.scss";
+@import "px-helpers-design/_generic.helpers.scss";
+
+// Base
+@import "px-flexbox-design/_base.flexbox.scss";
+@import "px-headings-design/_base.headings.scss";
+
+// Objects
+$inuit-enable-btn--primary      : true;
+$inuit-enable-btn--disabled     : true;
+
+@import "px-buttons-design/_objects.buttons.scss";
+
+:host {
+  display: inline-block;
+}
+
+// Components
+.modal {
+  position: fixed;
+  visibility: hidden;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  @apply(--px-modal);
+}
+
+.modal__content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: calc(100% - 2rem);
+  max-width: calc(100% - 2rem);
+  overflow: auto;
+  border-radius: 3px;
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-word;
+  @apply(--px-modal-content);
+  @include media-query(palm) {
+    width: 100%;
+  }
+}
+
+.modal__title {
+  @apply(--px-modal-title);
+}
+
+.modal__buttons {
+  margin: $inuit-base-spacing-unit--large -#{$inuit-base-spacing-unit--large} 0;
+  padding: $inuit-base-spacing-unit--large $inuit-base-spacing-unit--large 0;
+}
+.modal__buttons button.btn {
+  @apply(--px-modal-buttons);
+}
+.modal__buttons button.btn--primary {
+  @apply(--px-modal-positive-button);
+}
+
+// Trumps
+$inuit-enable-margins--none     : true;
+$inuit-enable-margins--small    : true;
+$inuit-enable-paddings--large   : true;
+
+@import "px-spacing-design/_trumps.spacing.scss";
+@import "px-widths-design/_trumps.widths.scss";

@@ -1,0 +1,42 @@
+
+@import "px-colors-design/_settings.colors.scss";
+$inuit-enable-inline-fields : true;
+$inuit-enable-input--regular : true;
+$inuit-enable-input--large : true;
+$inuit-enable-input--huge : true;
+$inuit-enable-text-input--bare : true;
+$inuit-enable-validation-states : true;
+
+
+
+
+
+
+$inuit-forms-border--disabled : true;
+
+
+$inuit-forms-border--readonly : true;
+
+
+
+$inuit-forms-select-shadow--dark : true;
+$inuit-forms-select-shadow--light : true;
+
+
+
+$inuit-forms-select-border--hover : true;
+
+$inuit-forms-select-border--pressed : true;
+
+
+@import "px-forms-design/_base.forms.scss";
+
+$inuit-enable-btn--primary:true;
+$inuit-enable-btn--large : true;
+$inuit-enable-btn--icon : true;
+
+$inuit-enable-btn--tertiary:true;
+$inuit-enable-btn--disabled:true;
+
+@import "px-iconography-design/_base.iconography.scss";
+@import "px-buttons-design/_objects.buttons.scss";

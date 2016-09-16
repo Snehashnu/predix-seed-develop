@@ -1,0 +1,55 @@
+{
+  "name": "exceljs",
+  "version": "0.2.22",
+  "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
+  "private": false,
+  "license": "MIT",
+  "author": {
+    "name": "Guyon Roche",
+    "email": "cyber.sapiens@hotmail.com",
+    "url": "https://github.com/guyonroche/exceljs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guyonroche/exceljs.git"
+  },
+  "keywords": [
+    "xlsx", "json", "csv", "excel", "font", "border", "fill", "number", "format", "number format", "alignment", "office", "spreadsheet", "workbook",
+    "defined names", "data validations", "rich text", "in-cell format", "outlineLevel", "views", "frozen", "split", "pageSetup"
+  ],
+  "dependencies": {
+    "archiver": "0.15.0",
+    "bluebird": "*",
+    "fast-csv": "0.5.7",
+    "moment": "2.11.2",
+    "sax": "^0.6.0",
+    "underscore": "1.4.4",
+    "unzip2": "^0.2.5"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "chai-xml": "*",
+    "chai-datetime": "*",
+    "express": "*",
+    "jshint": "*",
+    "lodash": "*",
+    "memorystream": "*",
+    "mocha": "*",
+    "request": "*"
+  },
+  "scripts": {
+    "test": "npm run unit-test && npm run integration-test && npm run end-to-end-test",
+
+    "unit-test": "mocha spec/unit --recursive",
+    "integration-test": "mocha spec/integration --recursive",
+    "end-to-end-test": "mocha spec/end-to-end --recursive"
+  },
+  "main": "./excel.js",
+  "files": [
+    "excel.js",
+    "lib",
+    "LICENSE",
+    "README.md",
+    "MODEL.md"
+  ]
+}
